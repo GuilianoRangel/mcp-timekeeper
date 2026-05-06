@@ -16,7 +16,7 @@
 POST /auth/login
 body:
 {
-  "email": "admin@timekeeper",
+  "email": "admin@timekeeper.local",
   "password": "Admin@123"
 }
 

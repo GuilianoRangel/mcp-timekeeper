@@ -13,7 +13,7 @@ O seed padrão cria:
 
 Variáveis de ambiente suportadas no seed:
 - SEED_ADMIN_NAME (default: Administrador)
-- SEED_ADMIN_EMAIL (default: admin@timekeeper)
+- SEED_ADMIN_EMAIL (default: admin@timekeeper.local)
 - SEED_ADMIN_PASSWORD (default: Admin@123)
 - SEED_PROJECT_NAME (default: Caliandra)
 - SEED_API_KEY_LABEL (default: mcp-default)
