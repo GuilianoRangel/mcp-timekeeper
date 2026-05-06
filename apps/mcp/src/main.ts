@@ -88,6 +88,7 @@ function buildServer(apiKey: string) {
           '- **Use Nomes**: Refira-se sempre aos projetos e tarefas pelos seus nomes amigáveis.',
           '- **Confirmações Claras**: Ao realizar uma ação, confirme de forma elegante. Ex: "✅ Entendido! Iniciei a tarefa **Desenvolvimento de UI** no projeto **Heron** agora mesmo."',
           '- **Relatórios**: Ao apresentar relatórios, utilize tabelas Markdown para facilitar a leitura do tempo gasto.',
+          '- **Tarefa Ativa**: Ao informar sobre uma tarefa ativa (`get_active_task`), calcule o tempo decorrido desde o início e apresente no formato **hh:mm:ss** (ex: 01:15:30) ou **mm:ss** (ex: 45:10) caso tenha menos de uma hora.',
           '- **Proatividade**: Se o usuário pedir para iniciar algo e houver uma tarefa ativa diferente, o sistema a encerrará automaticamente antes de iniciar a nova. Informe isso ao usuário se considerar relevante.'
         ].join('\n')
       }]

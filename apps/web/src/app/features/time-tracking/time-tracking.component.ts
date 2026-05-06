@@ -398,8 +398,14 @@ export class TimeTrackingComponent implements OnInit {
 
   toLocalDatetimeInput(isoStr: string): string {
     if (!isoStr) return '';
-    // Convert ISO to "YYYY-MM-DDTHH:MM" for datetime-local input
-    return isoStr.substring(0, 16);
+    const date = new Date(isoStr);
+    if (isNaN(date.getTime())) return '';
+    
+    // Converte para o fuso horário local para o input datetime-local
+    // O input datetime-local espera o formato "yyyy-MM-ddTHH:mm" no horário local
+    const tzOffset = date.getTimezoneOffset() * 60000; // offset em milissegundos
+    const localISOTime = new Date(date.getTime() - tzOffset).toISOString().slice(0, 16);
+    return localISOTime;
   }
 
   openManualEntry() {
@@ -409,10 +415,9 @@ export class TimeTrackingComponent implements OnInit {
     this.manualDuration = '01:00';
     this.manualDate = new Date().toISOString().split('T')[0];
     const now = new Date();
-    const pad = (n: number) => n.toString().padStart(2, '0');
-    this.manualEnd = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
+    this.manualEnd = this.toLocalDatetimeInput(now.toISOString());
     const h1ago = new Date(now.getTime() - 3600000);
-    this.manualStart = `${h1ago.getFullYear()}-${pad(h1ago.getMonth()+1)}-${pad(h1ago.getDate())}T${pad(h1ago.getHours())}:${pad(h1ago.getMinutes())}`;
+    this.manualStart = this.toLocalDatetimeInput(h1ago.toISOString());
     this.showManualEntry.set(true);
   }
 
