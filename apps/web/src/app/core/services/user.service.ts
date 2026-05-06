@@ -19,4 +19,8 @@ export class UserService {
   deleteUser(id: string) {
     return this.http.delete<{ success: boolean }>(`/api/users/${id}`);
   }
+
+  updateUser(id: string, userData: Partial<User>) {
+    return this.http.put<{ success: boolean }>(`/api/users/${id}`, userData);
+  }
 }

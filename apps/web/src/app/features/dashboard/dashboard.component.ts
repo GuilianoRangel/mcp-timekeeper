@@ -1,10 +1,11 @@
 import { Component, inject, OnInit, OnDestroy, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { LucideAngularModule, Play, Square, List, Folder, FileText, ChevronRight, History } from 'lucide-angular';
+import { LucideAngularModule, Play, Square, List, Folder, FileText, ChevronRight, History, Target } from 'lucide-angular';
 import { TimeService } from '../../core/services/time.service';
 import { ProjectService } from '../../core/services/project.service';
 import { ToastService } from '../../core/services/toast.service';
+import { AuthService } from '../../core/services/auth.service';
 import { Project, Task, TimeEntry } from '../../core/models';
 import { DurationPipe } from '../../shared/pipes/duration.pipe';
 import { interval, Subscription } from 'rxjs';
@@ -159,25 +160,59 @@ import { interval, Subscription } from 'rxjs';
 
         <!-- Sidebar / Stats -->
         <div class="space-y-6">
-          <div class="card p-6 bg-gradient-to-br from-primary-600 to-primary-700 text-white border-none shadow-lg shadow-primary-200">
-            <h4 class="text-sm font-bold uppercase tracking-wider opacity-80 mb-1">Total Hoje</h4>
-            <p class="text-4xl font-mono font-bold">{{ dailyTotal() | duration }}</p>
-            <div class="mt-4 pt-4 border-t border-white/10 flex justify-between text-sm">
-              <span>Sessões: {{ recentEntries().length }}</span>
-              <span>Meta: 8h</span>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6">
+            <div class="card p-6 bg-gradient-to-br from-primary-600 to-primary-700 text-white border-none shadow-lg shadow-primary-200">
+              <h4 class="text-sm font-bold uppercase tracking-wider opacity-80 mb-1">Total Hoje</h4>
+              <p class="text-4xl font-mono font-bold">{{ dailyTotal() | duration }}</p>
+              <div class="mt-4 pt-4 border-t border-white/10 flex justify-between text-sm">
+                <span>Sessões: {{ recentEntries().length }}</span>
+                <span>Ativo agora: {{ activeTask() ? 'Sim' : 'Não' }}</span>
+              </div>
             </div>
-          </div>
 
-          <div class="card p-6">
-            <h4 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
-               <lucide-icon [name]="ListIcon" size="18" class="text-primary-600"></lucide-icon>
-               Projetos Ativos
-            </h4>
-            <div class="space-y-4">
-              <div *ngFor="let p of projects().slice(0, 5)" class="flex items-center justify-between">
-                <span class="text-sm font-medium text-slate-600">{{ p.name }}</span>
-                <div class="w-24 h-2 bg-slate-100 rounded-full overflow-hidden">
-                  <div class="h-full bg-primary-500 rounded-full" [style.width.%]="45"></div>
+            <div class="card p-6 border-none bg-slate-50 shadow-sm">
+              <div class="flex items-center justify-between mb-4">
+                <h4 class="font-bold text-slate-800 flex items-center gap-2">
+                  <lucide-icon [name]="TargetIcon" size="18" class="text-primary-600"></lucide-icon>
+                  Progresso Semanal
+                </h4>
+                <span class="text-xs font-bold text-slate-500">{{ weeklyPercent() }}%</span>
+              </div>
+              
+              <div class="space-y-4">
+                <div class="w-full h-4 bg-slate-200 rounded-full overflow-hidden shadow-inner">
+                  <div 
+                    class="h-full bg-primary-500 rounded-full transition-all duration-1000 ease-out shadow-[0_0_10px_rgba(var(--primary-rgb),0.5)]" 
+                    [style.width.%]="weeklyPercent()"
+                  ></div>
+                </div>
+                
+                <div class="flex justify-between items-end">
+                  <div>
+                    <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Acumulado</p>
+                    <p class="text-lg font-mono font-bold text-slate-700">{{ weeklyTotal() | duration }}</p>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Meta: {{ (userGoal() / 3600) }}h</p>
+                    <p class="text-sm font-bold" [class.text-primary-600]="weeklyBalance() > 0" [class.text-emerald-500]="weeklyBalance() <= 0">
+                      {{ weeklyBalance() > 0 ? (weeklyBalance() | duration) + ' restante' : 'Meta batida! 🎉' }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card p-6">
+              <h4 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
+                 <lucide-icon [name]="ListIcon" size="18" class="text-primary-600"></lucide-icon>
+                 Projetos Ativos
+              </h4>
+              <div class="space-y-4">
+                <div *ngFor="let p of projects().slice(0, 5)" class="flex items-center justify-between">
+                  <span class="text-sm font-medium text-slate-600">{{ p.name }}</span>
+                  <div class="w-24 h-2 bg-slate-100 rounded-full overflow-hidden">
+                    <div class="h-full bg-primary-500 rounded-full" [style.width.%]="45"></div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -191,11 +226,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
   private timeService = inject(TimeService);
   private projectService = inject(ProjectService);
   private toastService = inject(ToastService);
+  private authService = inject(AuthService);
 
   activeTask = this.timeService.activeTask;
   projects = signal<Project[]>([]);
   tasks = signal<Task[]>([]);
   recentEntries = signal<TimeEntry[]>([]);
+  weeklyEntries = signal<TimeEntry[]>([]);
   
   selectedProjectId = '';
   selectedTaskId = '';
@@ -211,6 +248,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   readonly ListIcon = List;
   readonly HistoryIcon = History;
   readonly ChevronRightIcon = ChevronRight;
+  readonly TargetIcon = Target;
 
   activeProjectName = computed(() => {
     const active = this.activeTask() as any;
@@ -226,12 +264,34 @@ export class DashboardComponent implements OnInit, OnDestroy {
   });
 
   dailyTotal = computed(() => {
-    return this.recentEntries().reduce((acc, curr) => acc + (curr.durationSeconds || 0), 0);
+    const entriesTotal = this.recentEntries().reduce((acc, curr) => acc + (curr.durationSeconds || 0), 0);
+    return entriesTotal + this.elapsedTime();
+  });
+
+  userGoal = computed(() => {
+    return this.authService.user()?.weeklyGoalSeconds || 36000;
+  });
+
+  weeklyTotal = computed(() => {
+    const entriesTotal = this.weeklyEntries().reduce((acc, curr) => acc + (curr.durationSeconds || 0), 0);
+    return entriesTotal + this.elapsedTime();
+  });
+
+  weeklyPercent = computed(() => {
+    const goal = this.userGoal();
+    if (goal === 0) return 100;
+    const percent = Math.floor((this.weeklyTotal() / goal) * 100);
+    return percent > 100 ? 100 : percent;
+  });
+
+  weeklyBalance = computed(() => {
+    return this.userGoal() - this.weeklyTotal();
   });
 
   ngOnInit() {
     this.loadData();
     this.loadRecent();
+    this.loadWeekly();
     
     // Check active task every minute just in case
     interval(60000).subscribe(() => this.timeService.getActiveTask().subscribe());
@@ -278,6 +338,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
     const today = new Date().toISOString().split('T')[0];
     this.timeService.getRecentEntries(today).subscribe(res => {
       this.recentEntries.set(res.filter(e => !!e.endedAt).sort((a, b) => b.startedAt.localeCompare(a.startedAt)));
+    });
+  }
+
+  loadWeekly() {
+    const now = new Date();
+    const day = now.getDay();
+    const diff = now.getDate() - day + (day === 0 ? -6 : 1);
+    const monday = new Date(now.setDate(diff)).toISOString().split('T')[0];
+    this.timeService.getRecentEntries(monday).subscribe(res => {
+      this.weeklyEntries.set(res.filter(e => !!e.endedAt));
     });
   }
 
@@ -332,6 +402,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       next: () => {
         this.toastService.success('Sessão finalizada com sucesso!');
         this.loadRecent();
+        this.loadWeekly();
       },
       error: (e) => this.toastService.error(e?.error?.message || 'Erro ao finalizar sessão.')
     });

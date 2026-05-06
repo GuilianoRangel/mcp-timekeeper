@@ -16,8 +16,8 @@
 POST /auth/login
 body:
 {
-  "email": "admin@timekeeper.local",
-  "password": "Admin@123456"
+  "email": "admin@timekeeper",
+  "password": "Admin@123"
 }
 
 Retorno: accessToken (JWT)
@@ -84,7 +84,8 @@ Executar (HTTP Stream nativo):
 - MCP_TRANSPORT=http MCP_HTTP_PORT=8080 MCP_HTTP_PATH=/mcp TIMEKEEPER_API_BASE_URL='http://127.0.0.1:3000' TIMEKEEPER_MCP_API_KEY='<key>' node apps/mcp/dist/main.js
 
 Endpoint remoto:
-- http://SEU_HOST:8080/mcp
+- http://SEU_HOST:8080/mcp?apiKey=SUA_CHAVE_AQUI
+  (Ou envie via header `x-api-key`)
 
 Tools disponíveis:
 - llm_usage_guide
@@ -110,15 +111,12 @@ Pedido: "terminar tarefa"
 1) MCP chama stop_active_task sem solicitar nome da tarefa
 
 ## 9. Docker
-- docker compose up -d --build api
-- docker compose run --rm api sh -lc "node apps/api/dist/db/migrate.js && node apps/api/dist/db/seed.js"
-- docker compose up -d --build web
-- export TIMEKEEPER_MCP_API_KEY=***
 - docker compose up -d --build
+  (O comando de inicialização já executa migrações e seeds automaticamente)
 
 Endpoints padrão:
-- API: http://SEU_HOST:3000
-- Web: http://SEU_HOST:4200
+- API: http://SEU_HOST:8030
+- Web: http://SEU_HOST:8040
 - MCP HTTP Stream: http://SEU_HOST:8080/mcp
 
 Web em Docker Compose:

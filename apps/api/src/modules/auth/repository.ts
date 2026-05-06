@@ -7,6 +7,7 @@ export interface DbUser {
   password_hash: string;
   role: 'admin' | 'user';
   is_active: number;
+  weekly_goal_seconds: number;
 }
 
 export interface DbApiKey {

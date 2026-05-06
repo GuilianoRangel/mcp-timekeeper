@@ -5,6 +5,7 @@ export interface User {
   role: 'admin' | 'user';
   password?: string;
   isActive?: boolean;
+  weeklyGoalSeconds?: number;
 }
 
 export interface LoginResponse {

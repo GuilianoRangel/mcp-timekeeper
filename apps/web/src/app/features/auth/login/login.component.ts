@@ -40,7 +40,7 @@ import { AuthService } from '../../../core/services/auth.service';
                   autocomplete="email"
                   spellcheck="false"
                   class="input !pl-12" 
-                  placeholder="admin@timekeeper.local"
+                  placeholder="seu@email.com"
                 >
               </div>
             </div>
@@ -60,7 +60,7 @@ import { AuthService } from '../../../core/services/auth.service';
                   autocomplete="current-password"
                   spellcheck="false"
                   class="input !pl-12 !pr-12" 
-                  placeholder="••••••••"
+                  placeholder="Sua senha"
                 >
                 <button 
                   type="button"
@@ -87,7 +87,7 @@ import { AuthService } from '../../../core/services/auth.service';
           </form>
 
           <div class="mt-8 pt-6 border-t border-slate-100 text-center text-sm text-slate-500">
-            <p>Utilize as credenciais do seed para o primeiro acesso.</p>
+            <p>TimeKeeper - v0.1.0</p>
           </div>
         </div>
       </div>
@@ -108,8 +108,8 @@ export class LoginComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
 
-  email = 'admin@timekeeper.local';
-  password = 'Admin@123456';
+  email = '';
+  password = '';
   
   isLoading = signal(false);
   error = signal<string | null>(null);

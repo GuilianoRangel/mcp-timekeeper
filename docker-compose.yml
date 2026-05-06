@@ -12,15 +12,15 @@ services:
       EDIT_WINDOW_DAYS: ${EDIT_WINDOW_DAYS:-30}
       APP_TIMEZONE: ${APP_TIMEZONE:-America/Sao_Paulo}
       SEED_ADMIN_NAME: ${SEED_ADMIN_NAME:-Administrador}
-      SEED_ADMIN_EMAIL: ${SEED_ADMIN_EMAIL:-admin@timekeeper.local}
-      SEED_ADMIN_PASSWORD: ${SEED_ADMIN_PASSWORD:-Admin@123456}
-      SEED_PROJECT_NAME: ${SEED_PROJECT_NAME:-UEG}
+      SEED_ADMIN_EMAIL: ${SEED_ADMIN_EMAIL:-admin@timekeeper}
+      SEED_ADMIN_PASSWORD: ${SEED_ADMIN_PASSWORD:-Admin@123}
+      SEED_PROJECT_NAME: ${SEED_PROJECT_NAME:-Caliandra}
       SEED_API_KEY_LABEL: ${SEED_API_KEY_LABEL:-mcp-default}
     ports:
       - "8030:3000"
     volumes:
       - ./data:/app/data
-    command: sh -lc "node apps/api/dist/main.js"
+    command: sh -lc "node apps/api/dist/db/migrate.js && node apps/api/dist/db/seed.js && node apps/api/dist/main.js"
 
   mcp:
     build:
