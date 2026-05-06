@@ -1,0 +1,49 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    container_name: timekeeper-api
+    environment:
+      API_PORT: 3000
+      DATABASE_URL: file:/app/data/timekeeper.sqlite
+      JWT_SECRET: ${JWT_SECRET:-change-me-in-production}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-8h}
+      EDIT_WINDOW_DAYS: ${EDIT_WINDOW_DAYS:-30}
+      APP_TIMEZONE: ${APP_TIMEZONE:-America/Sao_Paulo}
+      SEED_ADMIN_NAME: ${SEED_ADMIN_NAME:-Administrador}
+      SEED_ADMIN_EMAIL: ${SEED_ADMIN_EMAIL:-admin@timekeeper.local}
+      SEED_ADMIN_PASSWORD: ${SEED_ADMIN_PASSWORD:-Admin@123456}
+      SEED_PROJECT_NAME: ${SEED_PROJECT_NAME:-UEG}
+      SEED_API_KEY_LABEL: ${SEED_API_KEY_LABEL:-mcp-default}
+    ports:
+      - "8030:3000"
+    volumes:
+      - ./data:/app/data
+    command: sh -lc "node apps/api/dist/main.js"
+
+  mcp:
+    build:
+      context: .
+      dockerfile: apps/mcp/Dockerfile
+    container_name: timekeeper-mcp
+    depends_on:
+      - api
+    environment:
+      TIMEKEEPER_API_BASE_URL: http://api:3000
+      TIMEKEEPER_MCP_API_KEY: ${TIMEKEEPER_MCP_API_KEY}
+      MCP_TRANSPORT: http
+      MCP_HTTP_PORT: 8080
+      MCP_HTTP_PATH: /mcp
+    ports:
+      - "8080:8080"
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    container_name: timekeeper-web
+    depends_on:
+      - api
+    ports:
+      - "8040:80"

@@ -1,0 +1,7 @@
+.container { max-width: 980px; margin: 0 auto; font-family: Arial, sans-serif; padding: 16px; }
+section { border: 1px solid #ddd; border-radius: 8px; margin-bottom: 14px; padding: 12px; }
+label { display: block; margin-bottom: 8px; }
+input { width: 100%; padding: 6px; margin-top: 4px; }
+button { margin-right: 8px; margin-top: 6px; padding: 8px 12px; }
+.row { display: flex; flex-wrap: wrap; gap: 8px; }
+pre { background: #111; color: #0f0; padding: 10px; overflow: auto; max-height: 300px; }

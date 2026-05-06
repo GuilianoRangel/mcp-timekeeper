@@ -1,0 +1,31 @@
+{
+  "name": "mcp-timekeeper",
+  "private": true,
+  "version": "0.1.0",
+  "description": "MCP-first time tracking app (API + Web + MCP server)",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run -ws build",
+    "dev": "npm run -ws dev",
+    "lint": "npm run -ws lint",
+    "test": "npm run -ws test",
+    "bootstrap": "sh ./scripts/dev-bootstrap.sh",
+    "up": "docker compose --env-file .env up -d --build api",
+    "up:web": "docker compose --env-file .env up -d --build web",
+    "up:all": "docker compose --env-file .env up -d --build",
+    "down": "docker compose down",
+    "logs": "docker compose logs -f --tail=200",
+    "logs:api": "docker compose logs -f --tail=200 api",
+    "logs:mcp": "docker compose logs -f --tail=200 mcp",
+    "logs:web": "docker compose logs -f --tail=200 web",
+    "ps": "docker compose ps",
+    "init:data": "docker compose --env-file .env run --rm api sh -lc \"node apps/api/dist/db/migrate.js && node apps/api/dist/db/seed.js\"",
+    "restart": "docker compose restart api mcp web"
+  },
+  "overrides": {
+    "rxjs": "7.8.2"
+  }
+}
