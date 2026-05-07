@@ -85,8 +85,9 @@ import { DurationPipe } from '../../shared/pipes/duration.pipe';
           <tbody class="divide-y divide-slate-100">
             <tr *ngFor="let entry of filteredEntries()" class="hover:bg-slate-50 transition-colors group">
               <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm font-medium text-slate-900">{{ entry.startedAt | date:'dd/MM/yyyy' }}</div>
-                <div class="text-xs text-slate-500">{{ entry.startedAt | date:'HH:mm' }} - {{ entry.endedAt | date:'HH:mm' }}</div>
+                <div class="text-sm font-medium text-slate-900">{{ (entry.startedAt || entry.createdAt) | date:'dd/MM/yyyy' }}</div>
+                <div *ngIf="entry.startedAt && entry.endedAt" class="text-xs text-slate-500">{{ entry.startedAt | date:'HH:mm' }} - {{ entry.endedAt | date:'HH:mm' }}</div>
+                <div *ngIf="!entry.startedAt" class="text-xs text-slate-400 italic">Duração manual</div>
               </td>
               <td class="px-6 py-4">
                 <div class="text-sm font-bold text-slate-800">{{ entry.task?.name || entry.taskId }}</div>
@@ -384,14 +385,15 @@ export class TimeTrackingComponent implements OnInit {
         project: { id: e.projectId, name: this.projectMap.get(e.projectId) || e.projectId, createdAt: '' },
         task: { id: e.taskId, name: this.taskMap.get(e.taskId) || e.taskId, projectId: e.projectId, createdAt: '' }
       } as TimeEntry));
-      this.entries.set(enriched.sort((a, b) => b.startedAt.localeCompare(a.startedAt)));
+      this.entries.set(enriched.sort((a, b) => (b.startedAt ?? b.createdAt ?? '').localeCompare(a.startedAt ?? a.createdAt ?? '')));
     });
   }
 
   // Can edit if entry is within 30 days
   canEdit(entry: TimeEntry): boolean {
-    if (!entry.startedAt) return false;
-    const created = new Date(entry.startedAt).getTime();
+    const dateStr = entry.startedAt || entry.createdAt;
+    if (!dateStr) return false;
+    const created = new Date(dateStr).getTime();
     const thirtyDaysMs = 30 * 24 * 60 * 60 * 1000;
     return (Date.now() - created) <= thirtyDaysMs;
   }
@@ -491,7 +493,7 @@ export class TimeTrackingComponent implements OnInit {
     this.editProjectId = entry.projectId;
     this.editTaskId = entry.taskId;
     this.editNote = entry.note || '';
-    this.editStart = this.toLocalDatetimeInput(entry.startedAt);
+    this.editStart = this.toLocalDatetimeInput(entry.startedAt ?? '');
     this.editEnd = entry.endedAt ? this.toLocalDatetimeInput(entry.endedAt) : '';
 
     this.projectService.getTasks(entry.projectId).subscribe(res => {

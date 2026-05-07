@@ -35,11 +35,13 @@ export interface TimeEntry {
   userId: string;
   projectId: string;
   taskId: string;
-  startedAt: string;
-  endedAt?: string;
+  entryType?: 'timer' | 'manual_duration' | 'manual_range';
+  startedAt: string | null;
+  endedAt?: string | null;
   durationSeconds?: number;
   note?: string;
   source: 'web' | 'api' | 'mcp';
+  createdAt?: string;
   project?: Project;
   task?: Task;
 }

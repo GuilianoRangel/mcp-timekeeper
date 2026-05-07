@@ -1,5 +1,6 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { SSEServerTransport } from '@modelcontextprotocol/sdk/server/sse.js';
+import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import { z } from 'zod';
 // @ts-ignore
 import express from 'express';
@@ -242,49 +243,142 @@ function buildServer(apiKey: string) {
 
 const app = express();
 app.use(cors());
+app.use(express.json());
 
-const sessions = new Map<string, SSEServerTransport>();
+// ── Legacy SSE sessions ──
+const sseSessions = new Map<string, SSEServerTransport>();
+
+// ── Streamable HTTP sessions ──
+const streamableSessions = new Map<string, { transport: StreamableHTTPServerTransport; server: McpServer }>();
 
 app.get('/health', (_req: any, res: any) => {
   res.json({ status: 'ok', service: 'mcp' });
 });
 
-app.get('/mcp', async (req: any, res: any) => {
-  const apiKey = (req.query.apiKey as string) || (req.headers['x-api-key'] as string);
+// ══════════════════════════════════════════════════════════════
+//  Streamable HTTP transport (POST/GET/DELETE em /mcp)
+//  Usado pelo Antigravity e clientes modernos
+// ══════════════════════════════════════════════════════════════
 
+function extractApiKey(req: any): string | undefined {
+  return (req.query.apiKey as string) || (req.headers['x-api-key'] as string);
+}
+
+// Rota unificada /mcp – Streamable HTTP (POST/GET/DELETE)
+app.all('/mcp', async (req: any, res: any, next: any) => {
+  const method = req.method.toUpperCase();
+
+  if (method === 'POST') {
+    const apiKey = extractApiKey(req);
+    if (!apiKey) {
+      console.error('[MCP Streamable] Tentativa de conexão sem API Key');
+      return res.status(401).json({ error: 'API Key is required via query param ?apiKey=... or header x-api-key' });
+    }
+
+    // Verifica se já existe uma sessão ativa (via header mcp-session-id)
+    const sessionId = req.headers['mcp-session-id'] as string | undefined;
+
+    if (sessionId && streamableSessions.has(sessionId)) {
+      const { transport } = streamableSessions.get(sessionId)!;
+      await transport.handleRequest(req, res, req.body);
+      return;
+    }
+
+    // Sem sessão ou sessão desconhecida: cria novo transport + server
+    const transport = new StreamableHTTPServerTransport({
+      sessionIdGenerator: () => randomUUID(),
+    });
+
+    const server = buildServer(apiKey);
+
+    transport.onclose = () => {
+      const sid = transport.sessionId;
+      if (sid) {
+        console.error(`[MCP Streamable] Sessão encerrada: ${sid}`);
+        streamableSessions.delete(sid);
+      }
+    };
+
+    await server.connect(transport);
+
+    const newSessionId = transport.sessionId;
+    if (newSessionId) {
+      console.error(`[MCP Streamable] Nova sessão criada: ${newSessionId}`);
+      streamableSessions.set(newSessionId, { transport, server });
+    }
+
+    await transport.handleRequest(req, res, req.body);
+    return;
+  }
+
+  if (method === 'GET') {
+    const sessionId = req.headers['mcp-session-id'] as string | undefined;
+    if (!sessionId || !streamableSessions.has(sessionId)) {
+      res.status(400).json({ error: 'Invalid or missing mcp-session-id header' });
+      return;
+    }
+    const { transport } = streamableSessions.get(sessionId)!;
+    await transport.handleRequest(req, res);
+    return;
+  }
+
+  if (method === 'DELETE') {
+    const sessionId = req.headers['mcp-session-id'] as string | undefined;
+    if (!sessionId || !streamableSessions.has(sessionId)) {
+      res.status(400).json({ error: 'Invalid or missing mcp-session-id header' });
+      return;
+    }
+    const { transport } = streamableSessions.get(sessionId)!;
+    await transport.handleRequest(req, res);
+    return;
+  }
+
+  // Método não suportado
+  res.status(405).json({ error: 'Method not allowed' });
+});
+
+
+// ══════════════════════════════════════════════════════════════
+//  Legacy SSE transport (GET /mcp/sse + POST /mcp/messages)
+//  Mantido para compatibilidade com clientes SSE antigos
+// ══════════════════════════════════════════════════════════════
+
+app.get('/mcp/sse', async (req: any, res: any) => {
+  const apiKey = extractApiKey(req);
   if (!apiKey) {
-    console.error('[MCP] Tentativa de conexão sem API Key');
+    console.error('[MCP SSE] Tentativa de conexão sem API Key');
     return res.status(401).send('API Key is required via query param ?apiKey=... or header x-api-key');
   }
 
-  // Usamos um path relativo para garantir que as mensagens passem pelo mesmo roteamento
   const transport = new SSEServerTransport('/mcp/messages', res);
   const sessionId = transport.sessionId;
-  
-  console.error(`[MCP] Nova conexão SSE em /mcp (Session: ${sessionId})`);
-  sessions.set(sessionId, transport);
+
+  console.error(`[MCP SSE] Nova conexão SSE (Session: ${sessionId})`);
+  sseSessions.set(sessionId, transport);
 
   const server = buildServer(apiKey);
   await server.connect(transport);
 
   req.on('close', () => {
-    console.error(`[MCP] Conexão SSE fechada (Session: ${sessionId})`);
-    sessions.delete(sessionId);
+    console.error(`[MCP SSE] Conexão fechada (Session: ${sessionId})`);
+    sseSessions.delete(sessionId);
   });
 });
 
 app.post('/mcp/messages', async (req: any, res: any) => {
   const sessionId = req.query.sessionId as string;
-  const transport = sessions.get(sessionId);
+  const transport = sseSessions.get(sessionId);
 
   if (transport) {
     await transport.handlePostMessage(req, res);
   } else {
-    console.error(`[MCP] Mensagem POST para sessão inexistente: ${sessionId}`);
+    console.error(`[MCP SSE] Mensagem para sessão inexistente: ${sessionId}`);
     res.status(400).send('No active session');
   }
 });
 
 app.listen(MCP_HTTP_PORT, () => {
   console.error(`MCP HTTP rodando em :${MCP_HTTP_PORT}`);
+  console.error(`  Streamable HTTP: POST/GET/DELETE /mcp`);
+  console.error(`  Legacy SSE:      GET /mcp/sse + POST /mcp/messages`);
 });

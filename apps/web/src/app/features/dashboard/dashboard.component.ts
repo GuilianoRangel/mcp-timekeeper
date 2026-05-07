@@ -337,7 +337,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   loadRecent() {
     const today = new Date().toISOString().split('T')[0];
     this.timeService.getRecentEntries(today).subscribe(res => {
-      this.recentEntries.set(res.filter(e => !!e.endedAt).sort((a, b) => b.startedAt.localeCompare(a.startedAt)));
+      this.recentEntries.set(res.filter(e => !!e.endedAt).sort((a, b) => (b.startedAt ?? b.createdAt ?? '').localeCompare(a.startedAt ?? a.createdAt ?? '')));
     });
   }
 
