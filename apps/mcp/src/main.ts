@@ -257,8 +257,8 @@ app.get('/mcp', async (req: any, res: any) => {
     return res.status(401).send('API Key is required via query param ?apiKey=... or header x-api-key');
   }
 
-  // Deixamos o transport gerenciar o sessionId interno
-  const transport = new SSEServerTransport('/messages', res);
+  // Usamos um path relativo para garantir que as mensagens passem pelo mesmo roteamento
+  const transport = new SSEServerTransport('/mcp/messages', res);
   const sessionId = transport.sessionId;
   
   console.error(`[MCP] Nova conexão SSE em /mcp (Session: ${sessionId})`);
@@ -273,7 +273,7 @@ app.get('/mcp', async (req: any, res: any) => {
   });
 });
 
-app.post('/messages', async (req: any, res: any) => {
+app.post('/mcp/messages', async (req: any, res: any) => {
   const sessionId = req.query.sessionId as string;
   const transport = sessions.get(sessionId);
 
