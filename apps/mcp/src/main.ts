@@ -301,13 +301,15 @@ app.all('/mcp', async (req: any, res: any, next: any) => {
 
     await server.connect(transport);
 
+    // handleRequest processa o 'initialize' e gera o sessionId internamente
+    await transport.handleRequest(req, res, req.body);
+
+    // Só APÓS handleRequest o sessionId está disponível
     const newSessionId = transport.sessionId;
     if (newSessionId) {
       console.error(`[MCP Streamable] Nova sessão criada: ${newSessionId}`);
       streamableSessions.set(newSessionId, { transport, server });
     }
-
-    await transport.handleRequest(req, res, req.body);
     return;
   }
 
