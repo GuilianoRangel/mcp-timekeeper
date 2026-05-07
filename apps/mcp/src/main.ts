@@ -8,7 +8,6 @@ import cors from 'cors';
 import { randomUUID } from 'node:crypto';
 
 const API_BASE_URL = process.env.TIMEKEEPER_API_BASE_URL ?? 'http://api:3000';
-const DEFAULT_API_KEY = process.env.TIMEKEEPER_MCP_API_KEY;
 const MCP_HTTP_PORT = Number(process.env.MCP_HTTP_PORT ?? '8080');
 
 /**
@@ -251,32 +250,33 @@ app.get('/health', (_req: any, res: any) => {
 });
 
 app.get('/mcp', async (req: any, res: any) => {
-  const apiKey = (req.query.apiKey as string) || (req.headers['x-api-key'] as string) || DEFAULT_API_KEY;
-  
+  const apiKey = (req.query.apiKey as string) || (req.headers['x-api-key'] as string);
+
   if (!apiKey) {
     console.error('[MCP] Tentativa de conexão sem API Key');
     return res.status(401).send('API Key is required via query param ?apiKey=... or header x-api-key');
   }
 
-  const sessionId = randomUUID();
+  // Deixamos o transport gerenciar o sessionId interno
+  const transport = new SSEServerTransport('/messages', res);
+  const sessionId = transport.sessionId;
+  
   console.error(`[MCP] Nova conexão SSE em /mcp (Session: ${sessionId})`);
-  
-  const transport = new SSEServerTransport(`/messages/${sessionId}`, res);
   sessions.set(sessionId, transport);
-  
+
   const server = buildServer(apiKey);
   await server.connect(transport);
-  
-  req.on('close', () => { 
+
+  req.on('close', () => {
     console.error(`[MCP] Conexão SSE fechada (Session: ${sessionId})`);
-    sessions.delete(sessionId); 
+    sessions.delete(sessionId);
   });
 });
 
-app.post('/messages/:sessionId', async (req: any, res: any) => {
-  const { sessionId } = req.params;
+app.post('/messages', async (req: any, res: any) => {
+  const sessionId = req.query.sessionId as string;
   const transport = sessions.get(sessionId);
-  
+
   if (transport) {
     await transport.handlePostMessage(req, res);
   } else {
