@@ -19,7 +19,7 @@ services:
     # ports:
     #   - "8030:3000"
     volumes:
-      - ./data:/app/data
+      - /docker/mcptimekeeper/data:/app/data
     networks:
       - dokploy-network
     labels:
