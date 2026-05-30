@@ -1,0 +1,2921 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light" data-palette="tom1">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Caliandra - Showroom Cerrado Design (Cd)</title>
+
+  <!-- Fontes do Design System (Cerrado Foundations) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap"
+    rel="stylesheet">
+
+  <!-- Iconify para ícones flexíveis e modernos -->
+  <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+
+  <style>
+    /* ===== TOKENS DE DESIGN (REFINED ORGANIC - ADAPTADO CALIANDRA) ===== */
+    :root {
+      /* Tipografia */
+      --font-display: 'Outfit', sans-serif;
+      --font-body: 'Source Sans 3', sans-serif;
+
+      /* Escala de Espaçamento Base 4px */
+      --space-1: 0.25rem;
+      /* 4px */
+      --space-2: 0.5rem;
+      /* 8px */
+      --space-3: 0.75rem;
+      /* 12px */
+      --space-4: 1rem;
+      /* 16px */
+      --space-5: 1.25rem;
+      /* 20px */
+      --space-6: 1.5rem;
+      /* 24px */
+      --space-8: 2rem;
+      /* 32px */
+      --space-10: 2.5rem;
+      /* 40px */
+      --space-12: 3rem;
+      /* 48px */
+      --space-16: 4rem;
+      /* 64px */
+
+      /* Arredondamento */
+      --radius-xs: 0.25rem;
+      --radius-sm: 0.375rem;
+      --radius-md: 0.5rem;
+      --radius-lg: 0.75rem;
+      --radius-xl: 1rem;
+      --radius-2xl: 1.5rem;
+      --radius-full: 9999px;
+
+      /* Animações e Transições */
+      --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-smooth: 350ms cubic-bezier(0.16, 1, 0.3, 1);
+
+      /* Elevações e Sombras */
+      --shadow-sm: 0 1px 2px 0 rgba(56, 93, 140, 0.04);
+      --shadow-md: 0 4px 12px -2px rgba(56, 93, 140, 0.06), 0 2px 4px -1px rgba(56, 93, 140, 0.02);
+      --shadow-lg: 0 12px 24px -4px rgba(56, 93, 140, 0.08), 0 4px 8px -2px rgba(56, 93, 140, 0.04);
+      --shadow-xl: 0 20px 40px -8px rgba(56, 93, 140, 0.12);
+
+      /* Dimensões Layout */
+      --sidebar-w: 280px;
+      --header-h: 64px;
+
+      /* Cores Padrão dos Componentes (Especificado no PDF) */
+      --color-btn-login: #5684bf;
+      --color-btn-login-opacity: rgba(86, 132, 191, 0.6);
+      --color-btn-add: #62d995;
+      --color-btn-save: #078c41;
+      --color-btn-cancel: #ff0000;
+      --color-btn-select: #77a1d9;
+
+      --color-bg-login: #c6dbf7;
+      --color-bg-system: #f3f4f6;
+      --color-bg-table: #ffffff;
+      --color-bg-input: #ffffff;
+      --color-bg-header-box: rgba(164, 195, 235, 0.3);
+
+      /* Alertas e Confirmação */
+      --color-success: #078c41;
+      --color-success-light: #e6f4ea;
+      --color-error: #d93025;
+      --color-error-light: #fce8e6;
+      --color-warning: #f2994a;
+      --color-warning-light: #fff3e6;
+      --color-info: #2f80ed;
+      --color-info-light: #ebf3fc;
+    }
+
+    /* ===== ESQUEMA DE CORES: TOM 1 (Azul Profundo) ===== */
+    [data-palette="tom1"] {
+      --color-primary: #385d8c;
+      --color-primary-hover: #29466b;
+      --color-primary-active: #1c314c;
+      --color-primary-light: #eef3f8;
+      --color-primary-outline: rgba(56, 93, 140, 0.12);
+      --color-accent: #a4c3eb;
+      --color-accent-light: #f3f7fc;
+
+      --color-text: #1e293b;
+      --color-text-muted: #64748b;
+      --color-text-light: #94a3b8;
+      --color-border: #e2e8f0;
+      --color-divider: #f1f5f9;
+      --color-card-bg: #ffffff;
+    }
+
+    /* ===== ESQUEMA DE CORES: TOM 2 (Azul Vibrante) ===== */
+    [data-palette="tom2"] {
+      --color-primary: #3c6aa6;
+      --color-primary-hover: #2d507e;
+      --color-primary-active: #203a5c;
+      --color-primary-light: #f0f4f9;
+      --color-primary-outline: rgba(60, 106, 166, 0.12);
+      --color-accent: #77a1d9;
+      --color-accent-light: #f1f6fc;
+
+      --color-text: #1a202c;
+      --color-text-muted: #4a5568;
+      --color-text-light: #718096;
+      --color-border: #e2e8f0;
+      --color-divider: #edf2f7;
+      --color-card-bg: #ffffff;
+    }
+
+    /* ===== DARK MODE APLICADO ===== */
+    [data-theme="dark"] {
+      --color-bg-system: #0b0f19;
+      --color-bg-table: #111827;
+      --color-bg-input: #1f2937;
+      --color-bg-header-box: rgba(56, 93, 140, 0.2);
+      --color-border: #374151;
+      --color-divider: #1f2937;
+      --color-card-bg: #111827;
+
+      --color-text: #f9fafb;
+      --color-text-muted: #9ca3af;
+      --color-text-light: #6b7280;
+
+      --color-success-light: rgba(7, 140, 65, 0.15);
+      --color-error-light: rgba(217, 48, 37, 0.15);
+      --color-warning-light: rgba(242, 153, 74, 0.15);
+      --color-info-light: rgba(47, 128, 237, 0.15);
+    }
+
+    /* ===== ESTILOS GERAIS ===== */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      -webkit-font-smoothing: antialiased;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: var(--font-body);
+      background-color: var(--color-bg-system);
+      color: var(--color-text);
+      display: flex;
+      flex-direction: column;
+      transition: background-color var(--transition-normal), color var(--transition-normal);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: var(--font-display);
+      font-weight: 600;
+      color: var(--color-text);
+      line-height: 1.25;
+    }
+
+    /* ===== APP SHELL ===== */
+    .app-shell {
+      display: grid;
+      grid-template-columns: var(--sidebar-w) 1fr;
+      grid-template-rows: var(--header-h) 1fr;
+      min-height: 100vh;
+    }
+
+    /* TOPBAR / HEADER */
+    .topbar {
+      grid-column: 1 / -1;
+      height: var(--header-h);
+      background-color: var(--color-card-bg);
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-6);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .brand-section {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .logo-container {
+      background-color: var(--color-primary);
+      color: #ffffff;
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .brand-title {
+      font-size: var(--space-5);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-title span {
+      color: var(--color-accent);
+    }
+
+    .topbar-controls {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      background-color: var(--color-card-bg);
+      border-right: 1px solid var(--color-border);
+      padding: var(--space-5) var(--space-3);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+      overflow-y: auto;
+      height: calc(100vh - var(--header-h));
+      position: sticky;
+      top: var(--header-h);
+    }
+
+    .sidebar-menu {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+
+    .menu-header {
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-text-muted);
+      padding: var(--space-2) var(--space-3);
+      font-weight: 700;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-md);
+      color: var(--color-text-muted);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: all var(--transition-fast);
+      cursor: pointer;
+    }
+
+    .menu-item:hover {
+      background-color: var(--color-primary-light);
+      color: var(--color-primary);
+    }
+
+    .menu-item.active {
+      background-color: var(--color-primary);
+      color: #ffffff;
+      box-shadow: var(--shadow-md);
+    }
+
+    /* MAIN CONTENT */
+    .main-content {
+      padding: var(--space-8);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-8);
+      overflow-y: auto;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* ESTILO SHOWROOM: TELAS ISOLADAS QUE SE EXIBEM EXCLUSIVAMENTE VIA SPA */
+    .showroom-canvas {
+      display: none;
+      /* Controlado dinamicamente via JavaScript */
+      background-color: var(--color-bg-system);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      box-shadow: var(--shadow-md);
+      flex-direction: column;
+      gap: var(--space-6);
+      position: relative;
+      animation: fadeIn var(--transition-normal);
+    }
+
+    .showroom-canvas.active {
+      display: flex;
+    }
+
+    .showroom-tag {
+      position: absolute;
+      top: -12px;
+      left: var(--space-8);
+      background-color: var(--color-primary-active);
+      color: #ffffff;
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* COMPONENTE COLLAPSE DE ESPECIFICAÇÃO TÉCNICA */
+    .cd-collapse {
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      background-color: var(--color-card-bg);
+      overflow: hidden;
+      margin-top: var(--space-6);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .cd-collapse-header {
+      width: 100%;
+      padding: var(--space-4) var(--space-5);
+      background-color: var(--color-primary-light);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      text-align: left;
+      border: none;
+      transition: background-color var(--transition-fast);
+    }
+
+    .cd-collapse-header:hover {
+      background-color: rgba(56, 93, 140, 0.1);
+    }
+
+    .cd-collapse-header iconify-icon {
+      font-size: 1.1rem;
+      transition: transform var(--transition-normal);
+    }
+
+    .cd-collapse-header.active iconify-icon.caret {
+      transform: rotate(180deg);
+    }
+
+    .cd-collapse-body {
+      display: none;
+      padding: var(--space-6);
+      border-top: 1px solid var(--color-border);
+      background-color: var(--color-card-bg);
+      animation: slideDown var(--transition-normal);
+    }
+
+    .cd-collapse-body.active {
+      display: block;
+    }
+
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-4);
+    }
+
+    .spec-item {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+
+    .spec-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--color-text-muted);
+    }
+
+    .spec-value {
+      font-size: 0.9rem;
+      font-family: monospace;
+      color: var(--color-text);
+      background-color: var(--color-primary-light);
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--radius-xs);
+    }
+
+    /* COMPONENTE TOOLTIP (DEFINIÇÃO E ESTILO DO DESIGN SYSTEM) */
+    .cd-tooltip {
+      position: relative;
+      display: inline-flex;
+      cursor: help;
+      color: var(--color-primary);
+      vertical-align: middle;
+      margin-left: var(--space-1);
+    }
+
+    .cd-tooltip-text {
+      visibility: hidden;
+      width: 260px;
+      background-color: var(--color-primary-active);
+      color: #ffffff;
+      text-align: left;
+      border-radius: var(--radius-md);
+      padding: var(--space-3);
+      position: absolute;
+      z-index: 100;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity var(--transition-fast), transform var(--transition-fast);
+      font-size: 0.8rem;
+      font-family: var(--font-body);
+      font-weight: 400;
+      box-shadow: var(--shadow-lg);
+      pointer-events: none;
+      line-height: 1.4;
+    }
+
+    .cd-tooltip-text::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: var(--color-primary-active) transparent transparent transparent;
+    }
+
+    .cd-tooltip:hover .cd-tooltip-text {
+      visibility: visible;
+      opacity: 1;
+      transform: translateX(-50%) translateY(-2px);
+    }
+
+    /* ===== INTERATIVOS DO TOPO ===== */
+    .toggle-group {
+      display: flex;
+      background-color: var(--color-primary-light);
+      border-radius: var(--radius-full);
+      padding: var(--space-1);
+      border: 1px solid var(--color-border);
+    }
+
+    .toggle-btn {
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-full);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      border: none;
+      background: none;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .toggle-btn.active {
+      background-color: var(--color-primary);
+      color: #ffffff;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ===== COMPONENTES DE FILTRO LINEAR (UMA SÓ LINHA) ===== */
+    .cd-filter-row-container {
+      background-color: var(--color-bg-header-box);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-3) var(--space-4);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+      box-shadow: var(--shadow-sm);
+      width: 100%;
+    }
+
+    .filter-separator {
+      width: 1px;
+      height: 24px;
+      background-color: var(--color-border);
+      align-self: center;
+    }
+
+    .cd-select {
+      height: 38px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+      background-color: var(--color-bg-input);
+      color: var(--color-text);
+      padding: 0 var(--space-8) 0 var(--space-3);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      transition: all var(--transition-fast);
+    }
+
+    .cd-select:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 2px var(--color-primary-outline);
+    }
+
+    .quick-chips-group-linear {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .cd-filter-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: 5px var(--space-3);
+      background-color: var(--color-bg-input);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-muted);
+      border-radius: var(--radius-full);
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    .cd-filter-chip:hover {
+      background-color: var(--color-primary-light);
+      color: var(--color-primary);
+    }
+
+    .cd-filter-chip.active {
+      background-color: var(--color-primary);
+      color: #ffffff;
+      border-color: var(--color-primary);
+    }
+
+    .chip-counter {
+      background-color: var(--color-accent);
+      color: var(--color-primary-active);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: var(--radius-full);
+      transition: all var(--transition-fast);
+    }
+
+    .cd-filter-chip.active .chip-counter {
+      background-color: #ffffff;
+      color: var(--color-primary);
+    }
+
+    .btn-advanced-filter-linear {
+      background-color: var(--color-bg-input);
+      border: 1px solid var(--color-border);
+      color: var(--color-text);
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      height: 38px;
+      padding: 0 var(--space-3);
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      font-family: var(--font-body);
+      transition: all var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .smart-filter-spacer {
+      flex: 1;
+    }
+
+    .smart-filter-custom-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      margin-left: auto;
+    }
+
+    .btn-advanced-filter-linear:hover {
+      background-color: var(--color-primary-light);
+      color: var(--color-primary);
+    }
+
+    .btn-advanced-filter-linear.active {
+      background-color: var(--color-primary-light);
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+
+    .cd-advanced-drawer-linear {
+      display: none;
+      background-color: var(--color-card-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      box-shadow: var(--shadow-lg);
+      margin-top: var(--space-2);
+      animation: slideDown var(--transition-normal);
+      width: 100%;
+    }
+
+    .cd-advanced-drawer-linear.active {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-5);
+    }
+
+    .adv-filter-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-5) var(--space-6);
+    }
+
+    .adv-filter-field {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .adv-filter-field .cd-label {
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .adv-filter-field .cd-label iconify-icon {
+      font-size: 1rem;
+      color: var(--color-text-muted);
+    }
+
+    .adv-field-row {
+      display: flex;
+      gap: var(--space-2);
+      align-items: stretch;
+    }
+
+    .adv-type-select {
+      height: 38px;
+      min-width: 120px;
+      border-radius: var(--radius-md) 0 0 var(--radius-md);
+      border: 1px solid var(--color-border);
+      border-right: none;
+      background-color: var(--color-primary-light);
+      color: var(--color-text-muted);
+      padding: 0 var(--space-2);
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 6px center;
+      padding-right: 22px;
+    }
+
+    .adv-field-row .cd-input {
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      height: 38px;
+    }
+
+    .adv-field-row .cd-input.full-radius {
+      border-radius: var(--radius-md);
+    }
+
+    .adv-field-date-range {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      flex: 1;
+    }
+
+    .adv-field-date-range .cd-input {
+      border-radius: var(--radius-md);
+      height: 38px;
+      flex: 1;
+    }
+
+    .adv-field-date-range span {
+      color: var(--color-text-muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .cd-advanced-actions {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: flex-end;
+      gap: var(--space-2);
+      border-top: 1px solid var(--color-border);
+      padding-top: var(--space-4);
+      margin-top: var(--space-2);
+    }
+
+    /* ===== GALERIA DE BOTÕES / COMPONENTES BASE ===== */
+    .components-gallery {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+
+    .gallery-row {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .gallery-title {
+      font-size: 0.9rem;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--color-border);
+      padding-bottom: var(--space-2);
+      font-weight: 700;
+    }
+
+    .gallery-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      align-items: center;
+    }
+
+    .cd-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      font-family: var(--font-body);
+      font-weight: 600;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      border: 1px solid transparent;
+      user-select: none;
+    }
+
+    .cd-btn-sm {
+      height: 32px;
+      padding: 0 var(--space-3);
+      font-size: 0.8rem;
+    }
+
+    .cd-btn-md {
+      height: 40px;
+      padding: 0 var(--space-4);
+      font-size: 0.9rem;
+    }
+
+    .cd-btn-lg {
+      height: 48px;
+      padding: 0 var(--space-6);
+      font-size: 1rem;
+    }
+
+    /* Variantes do PDF */
+    .cd-btn-login {
+      background-color: var(--color-btn-login-opacity);
+      color: #ffffff;
+      border-color: var(--color-btn-login);
+    }
+
+    .cd-btn-login:hover {
+      background-color: var(--color-btn-login);
+    }
+
+    .cd-btn-add {
+      background-color: var(--color-btn-add);
+      color: #111827;
+    }
+
+    .cd-btn-add:hover {
+      filter: brightness(0.9);
+      box-shadow: var(--shadow-md);
+    }
+
+    .cd-btn-save {
+      background-color: var(--color-btn-save);
+      color: #ffffff;
+    }
+
+    .cd-btn-save:hover {
+      filter: brightness(0.9);
+      box-shadow: var(--shadow-md);
+    }
+
+    .cd-btn-cancel {
+      background-color: transparent;
+      color: var(--color-btn-cancel);
+      border-color: var(--color-btn-cancel);
+    }
+
+    .cd-btn-cancel:hover {
+      background-color: rgba(255, 0, 0, 0.05);
+    }
+
+    .cd-btn-select {
+      background-color: var(--color-btn-select);
+      color: #ffffff;
+    }
+
+    .cd-btn-select:hover {
+      filter: brightness(0.9);
+    }
+
+    /* Badges */
+    .cd-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      padding: 2px var(--space-2);
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .cd-badge-success {
+      background-color: var(--color-success-light);
+      color: var(--color-success);
+    }
+
+    .cd-badge-error {
+      background-color: var(--color-error-light);
+      color: var(--color-error);
+    }
+
+    .cd-badge-warning {
+      background-color: var(--color-warning-light);
+      color: var(--color-warning);
+    }
+
+    .cd-badge-info {
+      background-color: var(--color-info-light);
+      color: var(--color-info);
+    }
+
+    .cd-badge-neutral {
+      background-color: var(--color-divider);
+      color: var(--color-text-muted);
+    }
+
+    /* Inputs */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+      flex: 1;
+      min-width: 240px;
+    }
+
+    .cd-input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .cd-input-wrapper iconify-icon {
+      position: absolute;
+      left: var(--space-3);
+      color: var(--color-text-light);
+      font-size: 1.2rem;
+    }
+
+    .cd-input-has-icon {
+      padding-left: calc(var(--space-4) + 1.25rem);
+    }
+
+    .cd-input {
+      width: 100%;
+      height: 40px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+      background-color: var(--color-bg-input);
+      color: var(--color-text);
+      padding: 0 var(--space-4);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      transition: all var(--transition-fast);
+    }
+
+    .cd-input:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px var(--color-primary-outline);
+    }
+
+    /* ===== CRUD ===== */
+    .crud-top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+      background-color: var(--color-card-bg);
+      padding: var(--space-4);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+    }
+
+    .crud-search-box {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      flex: 1;
+      max-width: 420px;
+    }
+
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: var(--space-4);
+    }
+
+    .cd-kpi-card {
+      background-color: var(--color-card-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-5);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .kpi-data {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+
+    .kpi-value {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 700;
+    }
+
+    .kpi-title {
+      font-size: 0.85rem;
+      color: var(--color-text-muted);
+      font-weight: 600;
+    }
+
+    .kpi-trend {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: var(--radius-full);
+      width: fit-content;
+    }
+
+    .kpi-trend-up {
+      background-color: var(--color-success-light);
+      color: var(--color-success);
+    }
+
+    .kpi-icon-box {
+      background-color: var(--color-primary-light);
+      color: var(--color-primary);
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    /* Tabela (CdDataTable) */
+    .cd-table-wrapper {
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      overflow-x: auto;
+      background-color: var(--color-bg-table);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .cd-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    .cd-table th {
+      background-color: var(--color-primary-light);
+      color: var(--color-primary-active);
+      font-family: var(--font-body);
+      font-weight: 600;
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--color-border);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .cd-table th.sortable {
+      cursor: pointer;
+      transition: color var(--transition-fast);
+    }
+
+    .cd-table th.sortable:hover {
+      color: var(--color-primary);
+    }
+
+    .cd-table th .sort-icon {
+      display: inline-flex;
+      vertical-align: middle;
+      margin-left: var(--space-1);
+      opacity: 0.3;
+      font-size: 0.85rem;
+      transition: opacity var(--transition-fast);
+    }
+
+    .cd-table th.sorted .sort-icon {
+      opacity: 1;
+      color: var(--color-primary);
+    }
+
+    .cd-table th.sorted {
+      color: var(--color-primary);
+    }
+
+    .cd-table td {
+      padding: var(--space-4);
+      border-bottom: 1px solid var(--color-divider);
+      vertical-align: middle;
+    }
+
+    .profile-cell {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .profile-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .profile-name {
+      font-weight: 600;
+    }
+
+    .profile-meta {
+      font-size: 0.8rem;
+      color: var(--color-text-muted);
+    }
+
+    .table-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .table-action-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text-muted);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      background: none;
+      border: none;
+      font-size: 1.15rem;
+    }
+
+    .table-action-btn:hover {
+      background-color: var(--color-divider);
+      color: var(--color-primary);
+    }
+
+    .table-action-btn-danger:hover {
+      background-color: var(--color-error-light);
+      color: var(--color-error);
+    }
+
+    .cd-table-search-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--color-border);
+      background-color: var(--color-bg-table);
+      gap: var(--space-3);
+    }
+
+    .cd-table-search-row .cd-input {
+      height: 34px;
+      font-size: 0.85rem;
+    }
+
+    .cd-table-total-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      padding: 3px var(--space-3);
+      border-radius: var(--radius-full);
+      background-color: var(--color-primary);
+      color: #ffffff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    /* Paginação */
+    .cd-pagination {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-4) 0;
+      border-top: 1px solid var(--color-border);
+      flex-wrap: wrap;
+      gap: var(--space-3);
+    }
+
+    .pagination-info {
+      font-size: 0.85rem;
+      color: var(--color-text-muted);
+    }
+
+    .pagination-controls {
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+    }
+
+    .pagination-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--color-border);
+      background-color: var(--color-bg-input);
+      color: var(--color-text);
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.85rem;
+      transition: all var(--transition-fast);
+    }
+
+    .pagination-btn:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+
+    .pagination-btn.active {
+      background-color: var(--color-primary);
+      color: #ffffff;
+      border-color: var(--color-primary);
+    }
+
+    /* ===== WIZARD ===== */
+    .wizard-container {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+
+    .wizard-header {
+      background-color: var(--color-bg-header-box);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+    }
+
+    .wizard-steps {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      overflow-x: auto;
+      padding-bottom: var(--space-2);
+    }
+
+    .wizard-steps::before {
+      content: '';
+      position: absolute;
+      top: 18px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background-color: var(--color-border);
+      z-index: 1;
+    }
+
+    .wizard-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-2);
+      z-index: 2;
+      flex: 1;
+      min-width: 100px;
+      cursor: pointer;
+    }
+
+    .step-circle {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-full);
+      background-color: var(--color-bg-input);
+      border: 2px solid var(--color-border);
+      color: var(--color-text-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-family: var(--font-display);
+      transition: all var(--transition-normal);
+    }
+
+    .step-label {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      text-align: center;
+      transition: all var(--transition-normal);
+      white-space: nowrap;
+    }
+
+    .wizard-step.active .step-circle {
+      background-color: var(--color-primary);
+      border-color: var(--color-primary);
+      color: #ffffff;
+      box-shadow: 0 0 0 4px var(--color-primary-outline);
+    }
+
+    .wizard-step.active .step-label {
+      color: var(--color-primary);
+      font-weight: 700;
+    }
+
+    .wizard-step.completed .step-circle {
+      background-color: var(--color-success);
+      border-color: var(--color-success);
+      color: #ffffff;
+    }
+
+    .wizard-step.completed .step-label {
+      color: var(--color-success);
+    }
+
+    .wizard-content-box {
+      background-color: var(--color-card-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      min-height: 250px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .wizard-pane {
+      display: none;
+      animation: fadeIn var(--transition-normal);
+    }
+
+    .wizard-pane.active {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-5);
+    }
+
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-4);
+    }
+
+    .cd-doc-upload {
+      border: 2px dashed var(--color-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-6);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-3);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      background-color: var(--color-primary-light);
+    }
+
+    .cd-doc-upload:hover {
+      border-color: var(--color-primary);
+      background-color: var(--color-accent-light);
+    }
+
+    .upload-icon {
+      font-size: 2.2rem;
+      color: var(--color-primary);
+    }
+
+    .upload-text {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+
+    .upload-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .upload-desc {
+      font-size: 0.8rem;
+      color: var(--color-text-muted);
+    }
+
+    .summary-section {
+      background-color: var(--color-primary-light);
+      border: 1px solid var(--color-primary-outline);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+    }
+
+    .summary-title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--color-primary-active);
+      margin-bottom: var(--space-3);
+      border-bottom: 1px solid var(--color-border);
+      padding-bottom: var(--space-2);
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-3);
+    }
+
+    .summary-item {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .summary-label {
+      font-size: 0.8rem;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .summary-val {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    /* ===== SPLIT SCREEN ===== */
+    .split-screen-box {
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      height: 560px;
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      background-color: var(--color-card-bg);
+    }
+
+    .split-list-panel {
+      border-right: 1px solid var(--color-border);
+      display: flex;
+      flex-direction: column;
+      background-color: var(--color-bg-table);
+    }
+
+    .split-list-header {
+      padding: var(--space-4);
+      border-bottom: 1px solid var(--color-border);
+      background-color: var(--color-primary-light);
+    }
+
+    .split-list-items {
+      overflow-y: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .split-list-item {
+      padding: var(--space-4);
+      border-bottom: 1px solid var(--color-divider);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .split-list-item:hover {
+      background-color: var(--color-primary-light);
+    }
+
+    .split-list-item.active {
+      background-color: var(--color-primary-light);
+      border-left: 4px solid var(--color-primary);
+    }
+
+    .split-detail-panel {
+      display: flex;
+      flex-direction: column;
+      background-color: var(--color-bg-system);
+      overflow-y: auto;
+    }
+
+    .split-detail-header {
+      padding: var(--space-5);
+      background-color: var(--color-card-bg);
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .viewer-body-mock {
+      background-color: #27272a;
+      border-radius: var(--radius-sm);
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #a1a1aa;
+      font-family: monospace;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    /* ANIMAÇÕES */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(4px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .app-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        display: none;
+      }
+
+      .split-screen-box {
+        grid-template-columns: 1fr;
+        height: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="app-shell">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="brand-section">
+        <div class="logo-container">
+          <iconify-icon icon="ph:flower-lotus-bold" width="24"></iconify-icon>
+        </div>
+        <div class="brand-title">Caliandra<span>.</span></div>
+      </div>
+
+      <div class="topbar-controls">
+        <!-- Alternador de Paleta do PDF -->
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 0.8rem; font-weight: 700; color: var(--color-text-muted);">PALETA:</span>
+          <div class="toggle-group">
+            <button class="toggle-btn active" onclick="switchPalette('tom1')" id="btn-tom1">Tom 1 (#385d8c)</button>
+            <button class="toggle-btn" onclick="switchPalette('tom2')" id="btn-tom2">Tom 2 (#3c6aa6)</button>
+          </div>
+        </div>
+
+        <div class="toggle-group">
+          <button class="toggle-btn active" onclick="switchTheme('light')" id="btn-light">
+            <iconify-icon icon="ph:sun-bold"></iconify-icon>
+          </button>
+          <button class="toggle-btn" onclick="switchTheme('dark')" id="btn-dark">
+            <iconify-icon icon="ph:moon-bold"></iconify-icon>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-menu">
+        <div class="menu-header">Showroom Caliandra</div>
+        <a href="#filtros" class="menu-item active" onclick="navigateToSection('filtros', this)">
+          <iconify-icon icon="ph:funnel-bold" width="18"></iconify-icon>
+          SmartFilterBar
+        </a>
+        <a href="#base" class="menu-item" onclick="navigateToSection('base', this)">
+          <iconify-icon icon="ph:cube-bold" width="18"></iconify-icon>
+          Componentes Base (Cd)
+        </a>
+        <a href="#datatable" class="menu-item" onclick="navigateToSection('datatable', this)">
+          <iconify-icon icon="ph:list-dashes-bold" width="18"></iconify-icon>
+          CdDataTable (Tabela)
+        </a>
+        <a href="#crud" class="menu-item" onclick="navigateToSection('crud', this)">
+          <iconify-icon icon="ph:table-bold" width="18"></iconify-icon>
+          CRUD / Manager
+        </a>
+        <a href="#wizard" class="menu-item" onclick="navigateToSection('wizard', this)">
+          <iconify-icon icon="ph:steps-bold" width="18"></iconify-icon>
+          Wizard (Etapas)
+        </a>
+        <a href="#split" class="menu-item" onclick="navigateToSection('split', this)">
+          <iconify-icon icon="ph:columns-bold" width="18"></iconify-icon>
+          Split-Screen (Matrículas)
+        </a>
+        <a href="#tokens" class="menu-item" onclick="navigateToSection('tokens', this)">
+          <iconify-icon icon="ph:palette-bold" width="18"></iconify-icon>
+          Design Tokens & Cores
+        </a>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+      <!-- 1. SEÇÃO SMARTFILTERBAR -->
+      <section id="filtros" class="showroom-canvas active">
+        <div class="showroom-tag">SmartFilterBar</div>
+
+        <div style="display: flex; flex-direction: column; gap: 4px; margin-top: 8px;">
+          <h3>SmartFilterBar — Barra de Filtro Inteligente</h3>
+          <p style="font-size: 0.95rem; color: var(--color-text-muted); line-height: 1.6;">
+            Componente padronizado e reutilizável em todas as telas do sistema que necessitam de busca e filtragem.
+            Combina filtros fixos (configurados via backend), chips de status rápido com contadores,
+            botão de filtros avançados e espaço reservado para ações customizadas por tela.
+          </p>
+        </div>
+
+        <div style="width: 100%;">
+          <div class="cd-filter-row-container">
+            <!-- Filtros Fixos (carregados via config do backend) -->
+            <select class="cd-select" id="select-ano">
+              <option value="2026">2026</option>
+              <option value="2025">2025</option>
+            </select>
+
+            <select class="cd-select" id="select-modalidade">
+              <option value="todos">Modalidades</option>
+              <option value="stricto">Stricto Sensu</option>
+              <option value="lato">Lato Sensu</option>
+            </select>
+
+            <div class="filter-separator"></div>
+
+            <!-- Filtros Rápidos (Chips com Contadores) -->
+            <div class="quick-chips-group-linear">
+              <button class="cd-filter-chip active" onclick="toggleChip(this, 'todos')">
+                Todos <span class="chip-counter">42</span>
+              </button>
+              <button class="cd-filter-chip" onclick="toggleChip(this, 'pendentes')">
+                Pendentes
+                <span class="cd-tooltip">
+                  <iconify-icon icon="ph:info-bold"></iconify-icon>
+                  <span class="cd-tooltip-text">Inscrições aguardando homologação eletrônica de documentos pela
+                    secretaria acadêmica da unidade.</span>
+                </span>
+                <span class="chip-counter">12</span>
+              </button>
+              <button class="cd-filter-chip" onclick="toggleChip(this, 'homologados')">
+                Homologados <span class="chip-counter">27</span>
+              </button>
+              <button class="cd-filter-chip" onclick="toggleChip(this, 'rascunhos')">
+                Rascunhos <span class="chip-counter">3</span>
+              </button>
+            </div>
+
+            <!-- Filtro Avançado junto dos chips -->
+            <button class="btn-advanced-filter-linear" id="btn-adv-toggle" onclick="toggleAdvancedPanel('advanced-drawer', 'btn-adv-toggle')">
+              <iconify-icon icon="ph:sliders-horizontal-bold"></iconify-icon>
+              Filtros Avançados
+            </button>
+
+            <!-- Espaço reservado para ações customizadas por tela -->
+            <div class="smart-filter-custom-actions">
+              <button class="cd-btn cd-btn-sm cd-btn-add">
+                <iconify-icon icon="ph:lightning-bold"></iconify-icon>
+                Ação Customizada
+              </button>
+            </div>
+          </div>
+
+          <!-- Drawer de Filtro Avançado (2 colunas, campos tipados) -->
+          <div class="cd-advanced-drawer-linear" id="advanced-drawer">
+            <div style="font-family: var(--font-display); font-weight: 700; font-size: 1rem; color: var(--color-text); display: flex; align-items: center; gap: 8px;">
+              <iconify-icon icon="ph:funnel-bold" style="color: var(--color-primary);"></iconify-icon>
+              Filtros Avançados
+            </div>
+
+            <div class="adv-filter-grid">
+              <!-- Campo Texto com seletor de tipo -->
+              <div class="adv-filter-field">
+                <label class="cd-label">
+                  <iconify-icon icon="ph:text-t-bold"></iconify-icon>
+                  Nome do Edital
+                </label>
+                <div class="adv-field-row">
+                  <select class="adv-type-select">
+                    <option>Começa com</option>
+                    <option>Contém</option>
+                    <option>Igual</option>
+                  </select>
+                  <input type="text" class="cd-input" placeholder="Ex: Edital 001" />
+                </div>
+              </div>
+
+              <!-- Campo Seleção (sem tipo de filtro) -->
+              <div class="adv-filter-field">
+                <label class="cd-label">
+                  <iconify-icon icon="ph:buildings-bold"></iconify-icon>
+                  Campus Universitário
+                </label>
+                <select class="cd-select" style="width: 100%; height: 38px;">
+                  <option value="">Selecione...</option>
+                  <option value="anapolis">Campus Central - Anápolis</option>
+                  <option value="goiania">Campus Goiânia</option>
+                  <option value="luziania">Unidade de Luziânia</option>
+                </select>
+              </div>
+
+              <!-- Campo Texto com seletor de tipo -->
+              <div class="adv-filter-field">
+                <label class="cd-label">
+                  <iconify-icon icon="ph:user-bold"></iconify-icon>
+                  Coordenador do PPG
+                </label>
+                <div class="adv-field-row">
+                  <select class="adv-type-select">
+                    <option>Contém</option>
+                    <option>Começa com</option>
+                    <option>Igual</option>
+                  </select>
+                  <input type="text" class="cd-input" placeholder="Ex: Dr. Carlos" />
+                </div>
+              </div>
+
+              <!-- Campo Seleção (sem tipo de filtro) -->
+              <div class="adv-filter-field">
+                <label class="cd-label">
+                  <iconify-icon icon="ph:tag-bold"></iconify-icon>
+                  Área CAPES
+                </label>
+                <select class="cd-select" style="width: 100%; height: 38px;">
+                  <option value="">Selecione...</option>
+                  <option>Ciências Ambientais</option>
+                  <option>Língua e Literatura</option>
+                  <option>Gestão Pública</option>
+                </select>
+              </div>
+
+              <!-- Campo Data com tipo (Entre) -->
+              <div class="adv-filter-field">
+                <label class="cd-label">
+                  <iconify-icon icon="ph:calendar-bold"></iconify-icon>
+                  Data de Publicação
+                </label>
+                <div class="adv-field-row">
+                  <select class="adv-type-select" onchange="toggleDateRange(this)">
+                    <option>Entre</option>
+                    <option>Igual</option>
+                    <option>Maior que</option>
+                    <option>Menor que</option>
+                  </select>
+                  <div class="adv-field-date-range">
+                    <input type="date" class="cd-input" />
+                    <span>a</span>
+                    <input type="date" class="cd-input" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Campo Numérico com tipo -->
+              <div class="adv-filter-field">
+                <label class="cd-label">
+                  <iconify-icon icon="ph:hash-bold"></iconify-icon>
+                  Vagas Ofertadas
+                </label>
+                <div class="adv-field-row">
+                  <select class="adv-type-select">
+                    <option>Maior que</option>
+                    <option>Menor que</option>
+                    <option>Igual</option>
+                    <option>Entre</option>
+                  </select>
+                  <input type="number" class="cd-input" placeholder="Ex: 10" />
+                </div>
+              </div>
+            </div>
+
+            <div class="cd-advanced-actions">
+              <button class="cd-btn cd-btn-sm cd-btn-cancel" onclick="toggleAdvancedPanel('advanced-drawer', 'btn-adv-toggle')">Cancelar</button>
+              <button class="cd-btn cd-btn-sm cd-btn-save" onclick="applyFilters('advanced-drawer', 'btn-adv-toggle')">
+                <iconify-icon icon="ph:magnifying-glass-bold"></iconify-icon>
+                Filtrar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- COLLAPSE DE ESPECIFICAÇÃO TÉCNICA -->
+        <div class="cd-collapse">
+          <button class="cd-collapse-header" onclick="toggleCollapse(this)">
+            <span><iconify-icon icon="ph:gear-bold"></iconify-icon> Especificação Técnica e Tokens Associados</span>
+            <iconify-icon icon="ph:caret-down-bold" class="caret"></iconify-icon>
+          </button>
+          <div class="cd-collapse-body">
+            <div class="specs-grid">
+              <div class="spec-item">
+                <span class="spec-label">Nome do Componente</span>
+                <span class="spec-value">SmartFilterBar (reutilizável em todo o sistema)</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Filtros Fixos</span>
+                <span class="spec-value">Configuráveis via JSON do backend (selects dinâmicos)</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Filtro Avançado Grid</span>
+                <span class="spec-value">grid-template-columns: 1fr 1fr; (sempre 2 colunas)</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Tipos de Filtro Texto</span>
+                <span class="spec-value">Começa com | Contém | Igual</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Tipos de Filtro Data/Numérico</span>
+                <span class="spec-value">Igual | Maior que | Menor que | Entre</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Ação Customizada</span>
+                <span class="spec-value">Slot parametrizável via prop (1 ou mais botões)</span>
+              </div>
+            </div>
+            <p style="margin-top: 16px; font-size: 0.9rem; color: var(--color-text-muted);">
+              <strong>Arquitetura:</strong> Campos de seleção não possuem seletor de tipo (apenas o dropdown). 
+              Campos de texto exibem o seletor acoplado à esquerda do input. 
+              O botão "Filtros Avançados" fica junto dos chips predefinidos. 
+              O espaço à direita (margin-left: auto) é reservado para ações customizadas por tela.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. SEÇÃO DE COMPONENTES BASE -->
+      <section id="base" class="showroom-canvas">
+        <div class="showroom-tag">Componentes Base</div>
+
+        <div style="display: flex; flex-direction: column; gap: 4px; margin-top: 8px;">
+          <h3>Biblioteca de Componentes Cd</h3>
+          <p class="section-desc">
+            Visualização isolada dos componentes primitivos estritamente formatados pelas diretrizes da PRP e do design
+            foundations.
+          </p>
+        </div>
+
+        <div class="components-gallery">
+          <!-- Botões Regulamentares -->
+          <div class="gallery-row">
+            <div class="gallery-title">Botões Regulamentares (PDF)</div>
+            <div class="gallery-items">
+              <button class="cd-btn cd-btn-md cd-btn-login">Entrar (Login)</button>
+              <button class="cd-btn cd-btn-md cd-btn-add">
+                <iconify-icon icon="ph:plus-bold"></iconify-icon>
+                Adicionar Novo
+              </button>
+              <button class="cd-btn cd-btn-md cd-btn-save">
+                <iconify-icon icon="ph:floppy-disk-bold"></iconify-icon>
+                Salvar Cadastro
+              </button>
+              <button class="cd-btn cd-btn-md cd-btn-select">Selecionar Programa</button>
+              <button class="cd-btn cd-btn-md cd-btn-cancel">Cancelar</button>
+            </div>
+          </div>
+
+          <!-- Badges de Status -->
+          <div class="gallery-row">
+            <div class="gallery-title">Status Acadêmicos (Badges)</div>
+            <div class="gallery-items">
+              <span class="cd-badge cd-badge-success">Homologado</span>
+              <span class="cd-badge cd-badge-info">Inscrição Aberta</span>
+              <span class="cd-badge cd-badge-warning">Pendente Análise</span>
+              <span class="cd-badge cd-badge-error">Edital Retificado</span>
+              <span class="cd-badge cd-badge-neutral">Rascunho</span>
+            </div>
+          </div>
+
+          <!-- Inputs e Form -->
+          <div class="gallery-row">
+            <div class="gallery-title">Campos de Formulário e Dicas</div>
+            <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+              <div class="form-group">
+                <label class="cd-label">
+                  Programa de Pós-Graduação <span class="required" style="color: var(--color-error);">*</span>
+                </label>
+                <div class="cd-input-wrapper">
+                  <iconify-icon icon="ph:graduation-cap-bold"></iconify-icon>
+                  <input type="text" class="cd-input cd-input-has-icon"
+                    placeholder="Ex: Stricto Sensu em Recursos Naturais" />
+                </div>
+                <span style="font-size: 0.8rem; color: var(--color-text-muted);">Digite o nome oficial homologado
+                  CAPES</span>
+              </div>
+
+              <div class="form-group">
+                <label class="cd-label">Código SIS (Erro)</label>
+                <input type="text" class="cd-input" value="999-INV" style="border-color: var(--color-error);" />
+                <span
+                  style="font-size: 0.8rem; color: var(--color-error); display: flex; align-items: center; gap: 4px; margin-top: 4px;">
+                  <iconify-icon icon="ph:warning-circle-bold"></iconify-icon>
+                  Código de fomento inválido ou inativo no SIGAD
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Empty State -->
+          <div class="gallery-row">
+            <div class="gallery-title">Empty State Acadêmico</div>
+            <div
+              style="border: 2px dashed var(--color-border); padding: var(--space-6); text-align: center; border-radius: 8px; background-color: var(--color-card-bg); display: flex; flex-direction: column; align-items: center; gap: 12px;">
+              <iconify-icon icon="ph:folder-open-bold"
+                style="font-size: 3rem; color: var(--color-text-light);"></iconify-icon>
+              <h4 style="font-size: 1.2rem;">Nenhum Edital de Seleção Ativo</h4>
+              <p style="font-size: 0.9rem; color: var(--color-text-muted); max-width: 400px;">
+                Não existem processos seletivos abertos para o semestre letivo selecionado. Cadastre um novo edital para
+                iniciar.
+              </p>
+              <button class="cd-btn cd-btn-md cd-btn-add">
+                <iconify-icon icon="ph:plus-bold"></iconify-icon>
+                Criar Primeiro Edital
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- COLLAPSE COMPONENTES BASE -->
+        <div class="cd-collapse">
+          <button class="cd-collapse-header" onclick="toggleCollapse(this)">
+            <span><iconify-icon icon="ph:gear-bold"></iconify-icon> Especificação Técnica e Tokens Associados</span>
+            <iconify-icon icon="ph:caret-down-bold" class="caret"></iconify-icon>
+          </button>
+          <div class="cd-collapse-body">
+            <div class="specs-grid">
+              <div class="spec-item">
+                <span class="spec-label">Opacidade Botão Login</span>
+                <span class="spec-value">rgba(86, 132, 191, 0.6) (60%)</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Cor Botão Adicionar</span>
+                <span class="spec-value">#62D995 (100%)</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Cor Botão Salvar</span>
+                <span class="spec-value">#078C41 (100%)</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Tipografia de Títulos</span>
+                <span class="spec-value">Outfit, sans-serif;</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. SEÇÃO CDDATATABLE -->
+      <section id="datatable" class="showroom-canvas">
+        <div class="showroom-tag">CdDataTable</div>
+        <div style="display: flex; flex-direction: column; gap: 4px; margin-top: 8px;">
+          <h3>CdDataTable — Componente de Tabela Padronizado</h3>
+          <p style="font-size: 0.95rem; color: var(--color-text-muted); line-height: 1.6;">
+            Tabela reutilizável com cabeçalhos de fonte reduzida, colunas ordenáveis por clique,
+            busca integrada na página, ícones de ação ampliados para responsividade mobile, badge de total e paginação.
+          </p>
+        </div>
+
+        <!-- Tabela Isolada com Ordenação -->
+        <div class="cd-table-wrapper">
+          <div class="cd-table-search-row">
+            <div class="cd-input-wrapper" style="flex: 1; max-width: 340px;">
+              <iconify-icon icon="ph:magnifying-glass-bold"></iconify-icon>
+              <input type="text" class="cd-input cd-input-has-icon" placeholder="Pesquisar nesta página..." style="height: 34px; font-size: 0.85rem;" />
+            </div>
+            <span class="cd-table-total-badge">Total: 5</span>
+          </div>
+          <table class="cd-table" id="demo-sortable-table">
+            <thead>
+              <tr>
+                <th class="sortable sorted" onclick="sortDemoTable(0, this)">
+                  ID <iconify-icon icon="ph:sort-ascending-bold" class="sort-icon"></iconify-icon>
+                </th>
+                <th class="sortable" onclick="sortDemoTable(1, this)">
+                  Nome <iconify-icon icon="ph:sort-ascending-bold" class="sort-icon"></iconify-icon>
+                </th>
+                <th class="sortable" onclick="sortDemoTable(2, this)">
+                  Categoria <iconify-icon icon="ph:sort-ascending-bold" class="sort-icon"></iconify-icon>
+                </th>
+                <th class="sortable" onclick="sortDemoTable(3, this)">
+                  Status <iconify-icon icon="ph:sort-ascending-bold" class="sort-icon"></iconify-icon>
+                </th>
+                <th class="sortable" onclick="sortDemoTable(4, this)">
+                  Valor <iconify-icon icon="ph:sort-ascending-bold" class="sort-icon"></iconify-icon>
+                </th>
+                <th class="sortable" onclick="sortDemoTable(5, this)">
+                  Data <iconify-icon icon="ph:sort-ascending-bold" class="sort-icon"></iconify-icon>
+                </th>
+                <th style="text-align: right;">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="font-weight: 600; color: var(--color-primary);">edital-01</td>
+                <td>Monitor LCD 27"</td>
+                <td>Electronics > Computers</td>
+                <td><span class="cd-badge cd-badge-error">OUT_OF_STOCK</span></td>
+                <td>US$ 300,00</td>
+                <td>1 de fev. de 2025</td>
+                <td style="text-align: right;">
+                  <div class="table-actions" style="justify-content: flex-end;">
+                    <button class="table-action-btn" title="Editar"><iconify-icon icon="ph:pencil-simple-bold" width="20"></iconify-icon></button>
+                    <button class="table-action-btn" title="Visualizar"><iconify-icon icon="ph:eye-bold" width="20"></iconify-icon></button>
+                    <button class="table-action-btn table-action-btn-danger" title="Excluir"><iconify-icon icon="ph:trash-bold" width="20"></iconify-icon></button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td style="font-weight: 600; color: var(--color-primary);">edital-02</td>
+                <td>Clean Code</td>
+                <td>Books > Technical</td>
+                <td><span class="cd-badge cd-badge-success">IN_STOCK</span></td>
+                <td>US$ 40,00</td>
+                <td>1 de dez. de 2024</td>
+                <td style="text-align: right;">
+                  <div class="table-actions" style="justify-content: flex-end;">
+                    <button class="table-action-btn" title="Editar"><iconify-icon icon="ph:pencil-simple-bold" width="20"></iconify-icon></button>
+                    <button class="table-action-btn" title="Visualizar"><iconify-icon icon="ph:eye-bold" width="20"></iconify-icon></button>
+                    <button class="table-action-btn table-action-btn-danger" title="Excluir"><iconify-icon icon="ph:trash-bold" width="20"></iconify-icon></button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td style="font-weight: 600; color: var(--color-primary);">edital-03</td>
+                <td>Harry Potter</td>
+                <td>Books > Fantasy</td>
+                <td><span class="cd-badge cd-badge-success">IN_STOCK</span></td>
+                <td>US$ 25,00</td>
+                <td>20 de nov. de 2024</td>
+                <td style="text-align: right;">
+                  <div class="table-actions" style="justify-content: flex-end;">
+                    <button class="table-action-btn" title="Editar"><iconify-icon icon="ph:pencil-simple-bold" width="20"></iconify-icon></button>
+                    <button class="table-action-btn" title="Visualizar"><iconify-icon icon="ph:eye-bold" width="20"></iconify-icon></button>
+                    <button class="table-action-btn table-action-btn-danger" title="Excluir"><iconify-icon icon="ph:trash-bold" width="20"></iconify-icon></button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="cd-pagination">
+          <span class="pagination-info">Mostrando <strong>1 - 3</strong> de <strong>5</strong> registros</span>
+          <div class="pagination-controls">
+            <button class="pagination-btn" disabled><iconify-icon icon="ph:caret-left-bold"></iconify-icon></button>
+            <button class="pagination-btn active">1</button>
+            <button class="pagination-btn">2</button>
+            <button class="pagination-btn"><iconify-icon icon="ph:caret-right-bold"></iconify-icon></button>
+          </div>
+        </div>
+
+        <!-- COLLAPSE CDDATATABLE -->
+        <div class="cd-collapse">
+          <button class="cd-collapse-header" onclick="toggleCollapse(this)">
+            <span><iconify-icon icon="ph:gear-bold"></iconify-icon> Especificação Técnica e Tokens Associados</span>
+            <iconify-icon icon="ph:caret-down-bold" class="caret"></iconify-icon>
+          </button>
+          <div class="cd-collapse-body">
+            <div class="specs-grid">
+              <div class="spec-item">
+                <span class="spec-label">Nome do Componente</span>
+                <span class="spec-value">CdDataTable (reutilizável em todo o sistema)</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Cabeçalho (th)</span>
+                <span class="spec-value">font-size: 0.75rem; font-weight: 600; font-family: Source Sans 3;</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Ordenação</span>
+                <span class="spec-value">Classe .sortable + ícone sort-icon (clique alterna ASC/DESC)</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Ícones de Ação</span>
+                <span class="spec-value">width: 36px; height: 36px; font-size: 1.15rem; (mobile-ready)</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Busca na Página</span>
+                <span class="spec-value">cd-table-search-row com input + badge de total</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Ação Destrutiva</span>
+                <span class="spec-value">.table-action-btn-danger (hover vermelho)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. SEÇÃO CRUD / MANAGER -->
+      <section id="crud" class="showroom-canvas">
+        <div class="showroom-tag">Padrão de Tela CRUD</div>
+
+        <div style="display: flex; flex-direction: column; gap: 4px; margin-top: 8px;">
+          <h3>Gerenciar Processos Seletivos</h3>
+          <p class="section-desc">
+            Visualização real do layout de listagem: KPIs contextuais com dicas, barra superior com **Campo de Busca por
+            texto**, Tabela de Dados Acadêmicos de alta densidade e Paginação limpa.
+          </p>
+        </div>
+
+        <!-- KPIs com Tooltip -->
+        <div class="kpi-row">
+          <div class="cd-kpi-card">
+            <div class="kpi-data">
+              <span class="kpi-title">
+                Inscrições Recebidas
+                <span class="cd-tooltip">
+                  <iconify-icon icon="ph:info-bold"></iconify-icon>
+                  <span class="cd-tooltip-text">Inscrições com preenchimento completo enviadas para análise eletrônica
+                    em 2026.</span>
+                </span>
+              </span>
+              <span class="kpi-value">1.458</span>
+              <span class="kpi-trend kpi-trend-up">
+                <iconify-icon icon="ph:trend-up-bold"></iconify-icon>
+                +12.4%
+              </span>
+            </div>
+            <div class="kpi-icon-box">
+              <iconify-icon icon="ph:student-bold"></iconify-icon>
+            </div>
+          </div>
+
+          <div class="cd-kpi-card">
+            <div class="kpi-data">
+              <span class="kpi-title">
+                Vagas Reservadas (Cotas)
+                <span class="cd-tooltip">
+                  <iconify-icon icon="ph:info-bold"></iconify-icon>
+                  <span class="cd-tooltip-text">Total de vagas reservadas para servidores e cotas raciais/sociais de
+                    acordo com a Resolução CsU 1276.</span>
+                </span>
+              </span>
+              <span class="kpi-value">280</span>
+              <span class="kpi-trend kpi-trend-up"
+                style="background-color: var(--color-info-light); color: var(--color-info);">
+                Art. 65
+              </span>
+            </div>
+            <div class="kpi-icon-box" style="background-color: var(--color-info-light); color: var(--color-info);">
+              <iconify-icon icon="ph:users-three-bold"></iconify-icon>
+            </div>
+          </div>
+        </div>
+
+        <!-- SmartFilterBar do CRUD (mesmo componente padronizado) -->
+        <div style="width: 100%;">
+          <div class="cd-filter-row-container">
+            <select class="cd-select">
+              <option value="2026">2026</option>
+              <option value="2025">2025</option>
+            </select>
+            <div class="filter-separator"></div>
+            <div class="quick-chips-group-linear">
+              <button class="cd-filter-chip active" onclick="toggleChip(this, 'todos')">Todos <span class="chip-counter">42</span></button>
+              <button class="cd-filter-chip" onclick="toggleChip(this, 'abertos')">Abertos <span class="chip-counter">8</span></button>
+              <button class="cd-filter-chip" onclick="toggleChip(this, 'homologados')">Homologados <span class="chip-counter">27</span></button>
+            </div>
+            <button class="btn-advanced-filter-linear" id="btn-adv-crud" onclick="toggleAdvancedPanel('adv-drawer-crud', 'btn-adv-crud')">
+              <iconify-icon icon="ph:sliders-horizontal-bold"></iconify-icon>
+              Filtros Avançados
+            </button>
+            <div class="smart-filter-custom-actions">
+              <button class="cd-btn cd-btn-sm cd-btn-add">
+                <iconify-icon icon="ph:plus-bold"></iconify-icon>
+                Adicionar Novo Edital
+              </button>
+            </div>
+          </div>
+          <div class="cd-advanced-drawer-linear" id="adv-drawer-crud">
+            <div style="font-family: var(--font-display); font-weight: 700; font-size: 1rem; color: var(--color-text); display: flex; align-items: center; gap: 8px;">
+              <iconify-icon icon="ph:funnel-bold" style="color: var(--color-primary);"></iconify-icon>
+              Filtros Avançados
+            </div>
+            <div class="adv-filter-grid">
+              <div class="adv-filter-field">
+                <label class="cd-label"><iconify-icon icon="ph:text-t-bold"></iconify-icon> PPG / Programa</label>
+                <div class="adv-field-row">
+                  <select class="adv-type-select"><option>Contém</option><option>Começa com</option><option>Igual</option></select>
+                  <input type="text" class="cd-input" placeholder="Ex: Recursos Naturais" />
+                </div>
+              </div>
+              <div class="adv-filter-field">
+                <label class="cd-label"><iconify-icon icon="ph:buildings-bold"></iconify-icon> Campus</label>
+                <select class="cd-select" style="width: 100%; height: 38px;">
+                  <option value="">Selecione...</option>
+                  <option>Campus Central - Anápolis</option>
+                  <option>Campus Goiânia</option>
+                </select>
+              </div>
+            </div>
+            <div class="cd-advanced-actions">
+              <button class="cd-btn cd-btn-sm cd-btn-cancel" onclick="toggleAdvancedPanel('adv-drawer-crud', 'btn-adv-crud')">Cancelar</button>
+              <button class="cd-btn cd-btn-sm cd-btn-save" onclick="applyFilters('adv-drawer-crud', 'btn-adv-crud')">
+                <iconify-icon icon="ph:magnifying-glass-bold"></iconify-icon> Filtrar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="cd-table-wrapper">
+          <div class="cd-table-search-row">
+            <div class="cd-input-wrapper" style="flex: 1; max-width: 340px;">
+              <iconify-icon icon="ph:magnifying-glass-bold"></iconify-icon>
+              <input type="text" class="cd-input cd-input-has-icon" placeholder="Pesquisar nesta página..." style="height: 34px; font-size: 0.85rem;" />
+            </div>
+            <span class="cd-table-total-badge">Total: 42</span>
+          </div>
+          <table class="cd-table">
+            <thead>
+              <tr>
+                <th class="sortable sorted">Edital de Seleção <iconify-icon icon="ph:sort-ascending-bold" class="sort-icon"></iconify-icon></th>
+                <th class="sortable">PPG / Curso <iconify-icon icon="ph:sort-ascending-bold" class="sort-icon"></iconify-icon></th>
+                <th class="sortable">Vagas <iconify-icon icon="ph:sort-ascending-bold" class="sort-icon"></iconify-icon></th>
+                <th class="sortable">Inscritos <iconify-icon icon="ph:sort-ascending-bold" class="sort-icon"></iconify-icon></th>
+                <th class="sortable">Status <iconify-icon icon="ph:sort-ascending-bold" class="sort-icon"></iconify-icon></th>
+                <th style="text-align: right;">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="profile-cell">
+                    <div class="logo-container"
+                      style="background-color: var(--color-primary-light); color: var(--color-primary);">
+                      <iconify-icon icon="ph:article-bold"></iconify-icon>
+                    </div>
+                    <div class="profile-info">
+                      <span class="profile-name">Edital 001/2026 - Regular</span>
+                      <span class="profile-meta">Prazo: 15/06/2026</span>
+                    </div>
+                  </div>
+                </td>
+                <td>Mestrado em Recursos Naturais (Anápolis)</td>
+                <td>
+                  <strong>30 vagas</strong>
+                  <div style="font-size: 0.75rem; color: var(--color-text-muted);">Arredondado: +2 Cotas Servidores
+                  </div>
+                </td>
+                <td>142 candidatos</td>
+                <td><span class="cd-badge cd-badge-success">Homologado</span></td>
+                <td style="text-align: right;">
+                  <div class="table-actions" style="justify-content: flex-end;">
+                    <button class="table-action-btn" title="Editar"><iconify-icon icon="ph:pencil-simple-bold" width="20"></iconify-icon></button>
+                    <button class="table-action-btn" title="Candidatos"><iconify-icon icon="ph:users-bold" width="20"></iconify-icon></button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="profile-cell">
+                    <div class="logo-container"
+                      style="background-color: var(--color-primary-light); color: var(--color-primary);">
+                      <iconify-icon icon="ph:article-bold"></iconify-icon>
+                    </div>
+                    <div class="profile-info">
+                      <span class="profile-name">Edital 002/2026 - Especial</span>
+                      <span class="profile-meta">Prazo: 22/06/2026</span>
+                    </div>
+                  </div>
+                </td>
+                <td>Doutorado em Língua e Literatura (Goiânia)</td>
+                <td><strong>12 vagas</strong></td>
+                <td>45 candidatos</td>
+                <td><span class="cd-badge cd-badge-info">Inscrições Abertas</span></td>
+                <td style="text-align: right;">
+                  <div class="table-actions" style="justify-content: flex-end;">
+                    <button class="table-action-btn" title="Editar"><iconify-icon icon="ph:pencil-simple-bold" width="20"></iconify-icon></button>
+                    <button class="table-action-btn" title="Candidatos"><iconify-icon icon="ph:users-bold" width="20"></iconify-icon></button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Paginação -->
+        <div class="cd-pagination">
+          <span class="pagination-info">Mostrando <strong>1 - 2</strong> de <strong>42</strong> processos
+            seletivos</span>
+          <div class="pagination-controls">
+            <button class="pagination-btn" disabled><iconify-icon icon="ph:caret-left-bold"></iconify-icon></button>
+            <button class="pagination-btn active">1</button>
+            <button class="pagination-btn">2</button>
+            <button class="pagination-btn"><iconify-icon icon="ph:caret-right-bold"></iconify-icon></button>
+          </div>
+        </div>
+
+        <!-- COLLAPSE CRUD -->
+        <div class="cd-collapse">
+          <button class="cd-collapse-header" onclick="toggleCollapse(this)">
+            <span><iconify-icon icon="ph:gear-bold"></iconify-icon> Especificação Técnica e Tokens Associados</span>
+            <iconify-icon icon="ph:caret-down-bold" class="caret"></iconify-icon>
+          </button>
+          <div class="cd-collapse-body">
+            <div class="specs-grid">
+              <div class="spec-item">
+                <span class="spec-label">Fundo de Tabela</span>
+                <span class="spec-value">--color-bg-table: #ffffff;</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Cabeçalho Tabela</span>
+                <span class="spec-value">background-color: var(--color-primary-light);</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Densidade Visual</span>
+                <span class="spec-value">padding: var(--space-4) (16px);</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Busca Integrada</span>
+                <span class="spec-value">display: flex; gap: var(--space-2); max-width: 420px;</span>
+              </div>
+            </div>
+            <p style="margin-top: 16px; font-size: 0.9rem; color: var(--color-text-muted);">
+              <strong>Regra de Negócio Implementada:</strong> A exibição de KPIs é fundamental na tomada de decisões do
+              coordenador da PRP, fornecendo acesso visual imediato a limites mínimos e cotas sem sobrecarregar a
+              interface primária da tabela de processos.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. SEÇÃO WIZARD -->
+      <section id="wizard" class="showroom-canvas">
+        <div class="showroom-tag">Padrão de Processo (Wizard)</div>
+
+        <div style="display: flex; flex-direction: column; gap: 4px; margin-top: 8px;">
+          <h3>Inscrição de Candidatos em Etapas</h3>
+          <p class="section-desc">
+            Fluxo guiado de inscrição que distribui dados civis, opções de ações afirmativas (com arredondamento
+            automático do Art. 65) e documentação de forma sequencial.
+          </p>
+        </div>
+
+        <div class="wizard-container">
+          <!-- Wizard Steps -->
+          <div class="wizard-header">
+            <div class="wizard-steps">
+              <div class="wizard-step completed" onclick="goToStep(1)">
+                <div class="step-circle">1</div>
+                <span class="step-label">Identificação</span>
+              </div>
+              <div class="wizard-step active" onclick="goToStep(2)">
+                <div class="step-circle">2</div>
+                <span class="step-label">Vagas e Cotas</span>
+              </div>
+              <div class="wizard-step" onclick="goToStep(3)">
+                <div class="step-circle">3</div>
+                <span class="step-label">Documentos</span>
+              </div>
+              <div class="wizard-step" onclick="goToStep(4)">
+                <div class="step-circle">4</div>
+                <span class="step-label">Revisão</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Wizard Content Box -->
+          <div class="wizard-content-box">
+            <!-- Passo 1 -->
+            <div class="wizard-pane" id="pane-1">
+              <h4 style="font-family: var(--font-display); font-size: 1.15rem; font-weight: 700;">Passo 1: Dados
+                Pessoais do Candidato</h4>
+              <p class="cd-hint">Insira os seus dados de identificação pessoal e civil.</p>
+              <div class="form-grid-2" style="margin-top: 16px;">
+                <div class="form-group">
+                  <label class="cd-label">Nome Completo</label>
+                  <input type="text" class="cd-input" value="Guiliano da Silva Cerrado" disabled />
+                </div>
+                <div class="form-group">
+                  <label class="cd-label">CPF (RFB)</label>
+                  <input type="text" class="cd-input" value="000.000.000-00" disabled />
+                </div>
+              </div>
+            </div>
+
+            <!-- Passo 2 -->
+            <div class="wizard-pane active" id="pane-2">
+              <h4 style="font-family: var(--font-display); font-size: 1.15rem; font-weight: 700;">Passo 2: Opção de
+                Concorrência e Cotas</h4>
+              <p class="cd-hint">Em cumprimento à Resolução CsU 1276, selecione a categoria de concorrência.</p>
+
+              <div class="form-grid-2" style="margin-top: 16px;">
+                <div class="form-group">
+                  <label class="cd-label">
+                    Modalidade de Concorrência
+                    <span class="cd-tooltip">
+                      <iconify-icon icon="ph:info-bold"></iconify-icon>
+                      <span class="cd-tooltip-text">A seleção de cotas para servidores ativará a validação eletrônica de
+                        contratação e vínculo com a UEG.</span>
+                    </span>
+                  </label>
+                  <select class="cd-select" style="width: 100%;" id="concorrencia-select" onchange="checkCotasRules()">
+                    <option value="ampla">Ampla Concorrência</option>
+                    <option value="cotas-servidor" selected>Cotas para Servidor UEG (Art. 63)</option>
+                    <option value="cotas-raciais">Cotas Raciais / Indígenas (Art. 64)</option>
+                  </select>
+                </div>
+
+                <div class="form-group" id="cargo-servidor-box">
+                  <label class="cd-label">Cargo do Servidor UEG</label>
+                  <select class="cd-select" style="width: 100%;">
+                    <option>Docente Efetivo</option>
+                    <option>Técnico-Administrativo</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Regra Acadêmica Inline -->
+              <div class="summary-section"
+                style="background-color: var(--color-info-light); border-color: var(--color-info-outline); margin-top: 20px;">
+                <div class="summary-title"
+                  style="color: var(--color-info); font-size: 0.9rem; border: none; margin: 0; padding: 0; display: flex; align-items: center; gap: 8px;">
+                  <iconify-icon icon="ph:info-bold"></iconify-icon>
+                  Regra de Arredondamento Sistêmico (Art. 65)
+                </div>
+                <p style="font-size: 0.8rem; color: var(--color-text-muted); margin-top: 4px; line-height: 1.4;">
+                  Se a reserva de cotas resultar em frações (ex: 2.1), o sistema arredonda automaticamente para
+                  <strong>3 vagas físicas</strong>, garantindo o direito à vaga de ação afirmativa.
+                </p>
+              </div>
+            </div>
+
+            <!-- Passo 3 -->
+            <div class="wizard-pane" id="pane-3">
+              <h4 style="font-family: var(--font-display); font-size: 1.15rem; font-weight: 700;">Passo 3: Documentação
+                de Inscrição</h4>
+              <p class="cd-hint">Faça o upload dos arquivos em formato PDF com tamanho máximo de 10MB.</p>
+
+              <div class="form-grid-2" style="margin-top: 16px;">
+                <div class="form-group">
+                  <label class="cd-label">Diploma de Graduação</label>
+                  <div class="cd-doc-upload">
+                    <iconify-icon icon="ph:cloud-arrow-up-bold" class="upload-icon"></iconify-icon>
+                    <div class="upload-text">
+                      <span class="upload-title">Clique para enviar ou arraste o arquivo</span>
+                      <span class="upload-desc">Apenas PDF (máx. 10MB)</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="cd-label">Projeto de Pesquisa</label>
+                  <div class="cd-doc-upload"
+                    style="background-color: var(--color-success-light); border-color: var(--color-success);">
+                    <iconify-icon icon="ph:check-circle-bold" class="upload-icon"
+                      style="color: var(--color-success);"></iconify-icon>
+                    <div class="upload-text">
+                      <span class="upload-title"
+                        style="color: var(--color-success);">projeto_recursos_naturais.pdf</span>
+                      <span class="upload-desc">2.4 MB · Upload concluído</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Passo 4 -->
+            <div class="wizard-pane" id="pane-4">
+              <h4 style="font-family: var(--font-display); font-size: 1.15rem; font-weight: 700;">Passo 4: Revisar e
+                Confirmar Dados</h4>
+              <p class="cd-hint">Certifique-se de que todas as informações prestadas são verdadeiras antes do envio
+                final.</p>
+
+              <div class="summary-grid" style="margin-top: 16px;">
+                <div class="summary-item">
+                  <span class="summary-label">Candidato</span>
+                  <span class="summary-val">Guiliano da Silva Cerrado</span>
+                </div>
+                <div class="summary-item">
+                  <span class="summary-label">Programa Escolhido</span>
+                  <span class="summary-val">Mestrado em Recursos Naturais</span>
+                </div>
+                <div class="summary-item">
+                  <span class="summary-label">Modalidade</span>
+                  <span class="summary-val">Cotas para Servidor</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Controles -->
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px;">
+            <button class="cd-btn cd-btn-md cd-btn-cancel" id="btn-wizard-prev" onclick="prevStep()">
+              <iconify-icon icon="ph:arrow-left-bold"></iconify-icon>
+              Voltar
+            </button>
+            <button class="cd-btn cd-btn-md cd-btn-select" id="btn-wizard-next" onclick="nextStep()">
+              <span>Próximo Passo</span>
+              <iconify-icon icon="ph:arrow-right-bold" id="btn-wizard-next-icon"></iconify-icon>
+            </button>
+          </div>
+        </div>
+
+        <!-- COLLAPSE WIZARD -->
+        <div class="cd-collapse">
+          <button class="cd-collapse-header" onclick="toggleCollapse(this)">
+            <span><iconify-icon icon="ph:gear-bold"></iconify-icon> Especificação Técnica e Tokens Associados</span>
+            <iconify-icon icon="ph:caret-down-bold" class="caret"></iconify-icon>
+          </button>
+          <div class="cd-collapse-body">
+            <div class="specs-grid">
+              <div class="spec-item">
+                <span class="spec-label">Borda de Upload</span>
+                <span class="spec-value">border: 2px dashed var(--color-border);</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Espaçamento Interno</span>
+                <span class="spec-value">padding: var(--space-5) (20px);</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Transição de Etapas</span>
+                <span class="spec-value">transition: all 250ms ease-in-out;</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. SEÇÃO SPLIT SCREEN -->
+      <section id="split" class="showroom-canvas">
+        <div class="showroom-tag">Padrão de Processo (Split-Screen)</div>
+
+        <div style="display: flex; flex-direction: column; gap: 4px; margin-top: 8px;">
+          <h3>Homologação de Matrículas e Documentações</h3>
+          <p class="section-desc">
+            Ideal para validações rápidas. A lista master de pendências à esquerda interage diretamente com os detalhes
+            e o visualizador à direita, permitindo despacho imediato sem abrir novas abas.
+          </p>
+        </div>
+
+        <div class="split-screen-box">
+          <div class="split-list-panel">
+            <div class="split-list-header">
+              <div class="cd-input-wrapper">
+                <iconify-icon icon="ph:magnifying-glass-bold"></iconify-icon>
+                <input type="text" class="cd-input cd-input-has-icon" placeholder="Buscar candidatos..."
+                  style="height: 34px;" />
+              </div>
+            </div>
+
+            <div class="split-list-items">
+              <div class="split-list-item active" onclick="selectCandidate(this, 'candidato-1')">
+                <div style="display: flex; justify-content: space-between; font-weight: 600; font-size: 0.85rem;">
+                  <span>Aline Guimarães</span>
+                  <span class="cd-badge cd-badge-warning" style="font-size: 0.65rem;">Pendente</span>
+                </div>
+                <span style="font-size: 0.8rem; color: var(--color-text-muted);">Mestrado em Recursos Naturais</span>
+              </div>
+
+              <div class="split-list-item" onclick="selectCandidate(this, 'candidato-2')">
+                <div style="display: flex; justify-content: space-between; font-weight: 600; font-size: 0.85rem;">
+                  <span>Carlos Eduardo</span>
+                  <span class="cd-badge cd-badge-success" style="font-size: 0.65rem;">Homologado</span>
+                </div>
+                <span style="font-size: 0.8rem; color: var(--color-text-muted);">Mestrado em Recursos Naturais</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="split-detail-panel">
+            <div class="split-detail-header">
+              <div>
+                <h4 id="cand-name" style="font-size: 1.05rem;">Aline Guimarães dos Santos</h4>
+                <span id="cand-sub" style="font-size: 0.8rem; color: var(--color-text-muted);">Mestrado em Recursos
+                  Naturais</span>
+              </div>
+              <span class="cd-badge cd-badge-warning" id="cand-badge">Pendente</span>
+            </div>
+
+            <div style="padding: 16px; display: flex; flex-direction: column; gap: 16px; flex: 1;">
+              <div class="viewer-body-mock">
+                <iconify-icon icon="ph:file-pdf-bold"
+                  style="font-size: 2rem; color: var(--color-error);"></iconify-icon>
+                <span>[ Diploma_de_Graduacao_Autenticado.pdf ]</span>
+              </div>
+
+              <div class="form-group">
+                <label class="cd-label">Observações de Parecer</label>
+                <textarea class="cd-input" style="height: 64px; padding: 8px; resize: none;"
+                  placeholder="Observações opcionais..."></textarea>
+              </div>
+            </div>
+
+            <div
+              style="padding: 12px 16px; background-color: var(--color-card-bg); border-top: 1px solid var(--color-border); display: flex; justify-content: flex-end; gap: 8px;">
+              <button class="cd-btn cd-btn-sm cd-btn-cancel" onclick="updateCandidateStatus('Recusado')">Rejeitar
+                Inscrição</button>
+              <button class="cd-btn cd-btn-sm cd-btn-save"
+                onclick="updateCandidateStatus('Homologado')">Homologar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- COLLAPSE SPLIT-SCREEN -->
+        <div class="cd-collapse">
+          <button class="cd-collapse-header" onclick="toggleCollapse(this)">
+            <span><iconify-icon icon="ph:gear-bold"></iconify-icon> Especificação Técnica e Tokens Associados</span>
+            <iconify-icon icon="ph:caret-down-bold" class="caret"></iconify-icon>
+          </button>
+          <div class="cd-collapse-body">
+            <div class="specs-grid">
+              <div class="spec-item">
+                <span class="spec-label">Divisão Grid</span>
+                <span class="spec-value">grid-template-columns: 320px 1fr;</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Rolagem Independente</span>
+                <span class="spec-value">overflow-y: auto; (No painel de detalhes)</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Altura Fixada</span>
+                <span class="spec-value">height: 560px;</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. SEÇÃO DESIGN TOKENS -->
+      <section id="tokens" class="showroom-canvas">
+        <div class="showroom-tag">Design Tokens</div>
+
+        <div style="display: flex; flex-direction: column; gap: 4px; margin-top: 8px;">
+          <h3>Cores, Variáveis e Tipografia</h3>
+          <p class="section-desc">
+            Visualização dos tokens de paleta para os esquemas Tom 1 e Tom 2 reativos.
+          </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px;">
+          <div style="border: 1px solid var(--color-border); border-radius: 6px; overflow: hidden;">
+            <div style="background-color: var(--color-primary); height: 80px;"></div>
+            <div style="padding: 12px;">
+              <strong>--color-primary</strong>
+              <div style="font-family: monospace; font-size: 0.8rem; color: var(--color-text-muted);">Cor Principal
+                Ativa</div>
+            </div>
+          </div>
+
+          <div style="border: 1px solid var(--color-border); border-radius: 6px; overflow: hidden;">
+            <div style="background-color: var(--color-btn-add); height: 80px;"></div>
+            <div style="padding: 12px;">
+              <strong>--color-btn-add</strong>
+              <div style="font-family: monospace; font-size: 0.8rem; color: var(--color-text-muted);">#62D995
+                (Adicionar)</div>
+            </div>
+          </div>
+
+          <div style="border: 1px solid var(--color-border); border-radius: 6px; overflow: hidden;">
+            <div style="background-color: var(--color-btn-save); height: 80px;"></div>
+            <div style="padding: 12px;">
+              <strong>--color-btn-save</strong>
+              <div style="font-family: monospace; font-size: 0.8rem; color: var(--color-text-muted);">#078C41 (Salvar)
+              </div>
+            </div>
+          </div>
+
+          <div style="border: 1px solid var(--color-border); border-radius: 6px; overflow: hidden;">
+            <div style="background-color: var(--color-bg-header-box); height: 80px;"></div>
+            <div style="padding: 12px;">
+              <strong>--color-bg-header-box</strong>
+              <div style="font-family: monospace; font-size: 0.8rem; color: var(--color-text-muted);">#A4C3EB (30%)
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- COLLAPSE TOKENS -->
+        <div class="cd-collapse">
+          <button class="cd-collapse-header" onclick="toggleCollapse(this)">
+            <span><iconify-icon icon="ph:gear-bold"></iconify-icon> Especificação Técnica e Tokens Associados</span>
+            <iconify-icon icon="ph:caret-down-bold" class="caret"></iconify-icon>
+          </button>
+          <div class="cd-collapse-body">
+            <div class="specs-grid">
+              <div class="spec-item">
+                <span class="spec-label">Fonte de Títulos</span>
+                <span class="spec-value">'Outfit', sans-serif;</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Fonte do Corpo</span>
+                <span class="spec-value">'Source Sans 3', sans-serif;</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- JAVASCRIPT INTERATIVO -->
+  <script>
+    // Gerenciador de SPA (Exibição de Seções Isoladas)
+    function navigateToSection(sectionId, element) {
+      // 1. Ocultar todas as seções do showroom
+      document.querySelectorAll('.showroom-canvas').forEach(section => {
+        section.classList.remove('active');
+      });
+
+      // 2. Exibir a seção ativa
+      const activeSection = document.getElementById(sectionId);
+      if (activeSection) {
+        activeSection.classList.add('active');
+      }
+
+      // 3. Atualizar o estado do menu lateral
+      document.querySelectorAll('.menu-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      if (element) {
+        element.classList.add('active');
+      }
+    }
+
+    // Inicialização da Navegação
+    window.addEventListener('DOMContentLoaded', () => {
+      // Começar na seção de filtros por padrão
+      const hash = window.location.hash.substring(1);
+      if (hash && document.getElementById(hash)) {
+        const menuItem = document.querySelector(`.menu-item[href="#${hash}"]`);
+        navigateToSection(hash, menuItem);
+      }
+    });
+
+    // Gerenciador de Temas (Light / Dark)
+    function switchTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      document.getElementById('btn-light').classList.remove('active');
+      document.getElementById('btn-dark').classList.remove('active');
+      document.getElementById('btn-' + theme).classList.add('active');
+    }
+
+    // Alternador de Paleta do PDF
+    function switchPalette(palette) {
+      document.documentElement.setAttribute('data-palette', palette);
+      document.getElementById('btn-tom1').classList.remove('active');
+      document.getElementById('btn-tom2').classList.remove('active');
+      document.getElementById('btn-' + palette).classList.add('active');
+    }
+
+    // Toggle do Painel de Filtros Avançados (parametrizado para múltiplas instâncias)
+    function toggleAdvancedPanel(drawerId, btnId) {
+      const drawer = document.getElementById(drawerId || 'advanced-drawer');
+      const btn = document.getElementById(btnId || 'btn-adv-toggle');
+      drawer.classList.toggle('active');
+      btn.classList.toggle('active');
+    }
+
+    // Toggle do Collapse de Especificações Técnicas
+    function toggleCollapse(button) {
+      button.classList.toggle('active');
+      const body = button.nextElementSibling;
+      body.classList.toggle('active');
+    }
+
+    // Toggle do Chip
+    function toggleChip(button, filterType) {
+      const chips = button.parentElement.querySelectorAll('.cd-filter-chip');
+      chips.forEach(chip => chip.classList.remove('active'));
+      button.classList.add('active');
+    }
+
+    function applyFilters(drawerId, btnId) {
+      alert('Filtros aplicados com sucesso!');
+      toggleAdvancedPanel(drawerId, btnId);
+    }
+
+    // Toggle de range de datas (mostra/oculta segundo input quando tipo != Entre)
+    function toggleDateRange(selectEl) {
+      const rangeContainer = selectEl.closest('.adv-field-row').querySelector('.adv-field-date-range');
+      if (rangeContainer) {
+        const secondInput = rangeContainer.querySelectorAll('.cd-input')[1];
+        const separator = rangeContainer.querySelector('span');
+        if (selectEl.value === 'Entre') {
+          secondInput.style.display = '';
+          separator.style.display = '';
+        } else {
+          secondInput.style.display = 'none';
+          separator.style.display = 'none';
+        }
+      }
+    }
+
+    // Ordenação demo da CdDataTable
+    function sortDemoTable(colIndex, thElement) {
+      const table = thElement.closest('table');
+      const headers = table.querySelectorAll('th');
+      headers.forEach(h => h.classList.remove('sorted'));
+      thElement.classList.add('sorted');
+
+      const icon = thElement.querySelector('.sort-icon');
+      const isAsc = icon.getAttribute('icon') === 'ph:sort-ascending-bold';
+      icon.setAttribute('icon', isAsc ? 'ph:sort-descending-bold' : 'ph:sort-ascending-bold');
+
+      const tbody = table.querySelector('tbody');
+      const rows = Array.from(tbody.querySelectorAll('tr'));
+      rows.sort((a, b) => {
+        const aText = a.cells[colIndex]?.textContent.trim() || '';
+        const bText = b.cells[colIndex]?.textContent.trim() || '';
+        return isAsc ? bText.localeCompare(aText) : aText.localeCompare(bText);
+      });
+      rows.forEach(row => tbody.appendChild(row));
+    }
+
+    // Interatividade do Wizard
+    let currentStep = 2;
+    function goToStep(step) {
+      if (step < 1 || step > 4) return;
+
+      document.querySelectorAll('.wizard-pane').forEach((pane, idx) => {
+        pane.classList.remove('active');
+        if (idx + 1 === step) pane.classList.add('active');
+      });
+
+      const steps = document.querySelectorAll('.wizard-step');
+      steps.forEach((stepEl, idx) => {
+        stepEl.classList.remove('active', 'completed');
+        if (idx + 1 < step) stepEl.classList.add('completed');
+        if (idx + 1 === step) stepEl.classList.add('active');
+      });
+
+      currentStep = step;
+
+      const prevBtn = document.getElementById('btn-wizard-prev');
+      const nextBtn = document.getElementById('btn-wizard-next');
+
+      if (currentStep === 1) {
+        prevBtn.style.visibility = 'hidden';
+      } else {
+        prevBtn.style.visibility = 'visible';
+      }
+
+      const nextBtnSpan = nextBtn.querySelector('span');
+      const nextBtnIcon = document.getElementById('btn-wizard-next-icon');
+
+      if (currentStep === 4) {
+        if (nextBtnSpan) nextBtnSpan.textContent = 'Finalizar Inscrição';
+        if (nextBtnIcon) nextBtnIcon.setAttribute('icon', 'ph:floppy-disk-bold');
+        nextBtn.classList.remove('cd-btn-select');
+        nextBtn.classList.add('cd-btn-save');
+      } else {
+        if (nextBtnSpan) nextBtnSpan.textContent = 'Próximo Passo';
+        if (nextBtnIcon) nextBtnIcon.setAttribute('icon', 'ph:arrow-right-bold');
+        nextBtn.classList.remove('cd-btn-save');
+        nextBtn.classList.add('cd-btn-select');
+      }
+    }
+
+    function nextStep() {
+      if (currentStep === 4) {
+        alert('Inscrição enviada para análise eletrônica!');
+        goToStep(1);
+      } else {
+        goToStep(currentStep + 1);
+      }
+    }
+
+    function prevStep() {
+      goToStep(currentStep - 1);
+    }
+
+    function checkCotasRules() {
+      const select = document.getElementById('concorrencia-select');
+      const cargoBox = document.getElementById('cargo-servidor-box');
+      if (select.value === 'cotas-servidor') {
+        cargoBox.style.display = 'flex';
+      } else {
+        cargoBox.style.display = 'none';
+      }
+    }
+
+    // Split-Screen Selection
+    function selectCandidate(element, id) {
+      document.querySelectorAll('.split-list-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      element.classList.add('active');
+
+      const nameEl = document.getElementById('cand-name');
+      const subEl = document.getElementById('cand-sub');
+      const badgeEl = document.getElementById('cand-badge');
+
+      if (id === 'candidato-1') {
+        nameEl.innerText = 'Aline Guimarães dos Santos';
+        subEl.innerText = 'Mestrado em Recursos Naturais · Inscrição #84920';
+        badgeEl.innerText = 'Pendente';
+        badgeEl.className = 'cd-badge cd-badge-warning';
+      } else if (id === 'candidato-2') {
+        nameEl.innerText = 'Carlos Eduardo de Oliveira';
+        subEl.innerText = 'Mestrado em Recursos Naturais · Inscrição #84915';
+        badgeEl.innerText = 'Homologado';
+        badgeEl.className = 'cd-badge cd-badge-success';
+      }
+    }
+
+    function updateCandidateStatus(status) {
+      const badgeEl = document.getElementById('cand-badge');
+      badgeEl.innerText = status;
+      if (status === 'Homologado') {
+        badgeEl.className = 'cd-badge cd-badge-success';
+        alert('Candidato homologado com sucesso!');
+      } else {
+        badgeEl.className = 'cd-badge cd-badge-error';
+        alert('Candidato recusado.');
+      }
+    }
+  </script>
+</body>
+
+</html>
